@@ -24,7 +24,7 @@ public void insertFirst(Object newData) - create a new link using newData. check
                                           else, set newNode.nextLink = first, set first = newNode, and set last.nextLink = first.
 public Link search(Object value) - set Link currentLink = first. while(currentLink != null), 
                                    check if currentLink.data = value. return the link.
-
+public void isEmpty() - return true if first == null
 
 
 
