@@ -39,7 +39,9 @@ public void setInJail <br />
 
 
 BoardSpace <br />
-int tax, int cost, String name, boolean isPurchasable
+Player owner, int tax, int cost, String name, boolean isPurchasable
+public int getOwner()
+public void setOwner(Player owner)
 public int getCost()
 public void setCost(int cost)
 public int getTax()

@@ -5,18 +5,29 @@
  * Date due: 10/26
  */
 public class BoardSpace {
+    Player owner;
+
     int cost;
     int tax;
     String name;
     boolean isPurchasable;
 
-    public BoardSpace(int cost, int tax, String name, boolean isPurchasable) {
+
+    public BoardSpace(Player owner, int cost, int tax, String name, boolean isPurchasable) {
+        this.owner = owner;
         this.cost = cost;
         this.tax = tax;
         this.name = name;
         this.isPurchasable = isPurchasable;
     }
 
+    public Player getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Player owner) {
+        this.owner = owner;
+    }
     public int getCost() {
         return cost;
     }
