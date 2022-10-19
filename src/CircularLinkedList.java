@@ -8,7 +8,12 @@ public class CircularLinkedList<T> {
 
     public T t;
     Link first;
-    public void insertFirst(Object newData) {
+
+    public CircularLinkedList(T t) {
+        this.t = t;
+    }
+
+    public void insertFirst(T newData) {
         Link node = new Link(newData);
         node.nextLink = first;
         first = node;

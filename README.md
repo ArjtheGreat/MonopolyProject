@@ -39,15 +39,28 @@ public void setInJail <br />
 
 
 BoardSpace <br />
-Player owner, int tax, int cost, String name, boolean isPurchasable
-public int getOwner()
-public void setOwner(Player owner)
-public int getCost()
-public void setCost(int cost)
-public int getTax()
-public void setTax(int tax)
-public String getName()
-isPurchasable()
-public void setPurchasable()
+Player owner, int tax, int cost, String name, boolean isPurchasable <br />
+public int getOwner() <br />
+public void setOwner(Player owner) <br />
+public int getCost() <br />
+public void setCost(int cost) <br />
+public int getTax() <br />
+public void setTax(int tax) <br />
+public String getName() <br />
+isPurchasable() <br />
+public void setPurchasable() <br />
+
+Game <br />
+CircularLinkedList<Player> players, CircularLinkedList<BoardSpace> gameBoard <br />
+public CircularLinkedList<Player> getPlayers() <br />
+public void setPlayers(CircularLinkedList<Player> players) <br />
+public CircularLinkedList<BoardSpace> getGameBoard() <br />
+public void setGameBoard(CircularLinkedList<BoardSpace> gameBoard) <br />
+
+Main <br />
+public static void main(String[] args) - Create a scanner, ask to input all players. Cap between 2 and 6.
+                                         Create Player() from the inputs. 
+public void runTurn() - rolls the dice, moves player to right square, prints out board, taxes them
+public void printBoard - prints out board
 
 ![Monopoly](https://user-images.githubusercontent.com/33406133/196270275-82d102c0-19de-4eeb-95ed-5f357a787c09.jpg)
