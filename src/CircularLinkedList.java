@@ -1,3 +1,9 @@
+/*********************
+ *
+ * Author: Arjun Maitra and Elliot Duke
+ * Assignment: Monopoly, Circular Linked List Class
+ * Date due: 10/26
+ */
 public class CircularLinkedList<T> {
 
     public T t;

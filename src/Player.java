@@ -1,7 +1,7 @@
 /*********************
  *
  * Author: Arjun Maitra and Elliot Duke
- * Assignment: Player
+ * Assignment: Monopoly, Player Class
  * Date due: 10/26
  */
 

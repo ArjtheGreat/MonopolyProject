@@ -37,4 +37,15 @@ public void setBalance(int newBalance) <br />
 public void setIcon(char newIcon) <br />
 public void setInJail <br />
 
+
+BoardSpace <br />
+int tax, int cost, String name, boolean isPurchasable
+public int getCost()
+public void setCost(int cost)
+public int getTax()
+public void setTax(int tax)
+public String getName()
+isPurchasable()
+public void setPurchasable()
+
 ![Monopoly](https://user-images.githubusercontent.com/33406133/196270275-82d102c0-19de-4eeb-95ed-5f357a787c09.jpg)
