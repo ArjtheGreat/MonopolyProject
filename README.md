@@ -29,7 +29,7 @@ public void isEmpty() - return true if first == null <br />
 
 Player <br />
 int balance, BoardSpace properties[], char icon, boolean inJail <br />
-public int getBalance() wooooo<br />
+public int getBalance() <br />
 public BoardSpace[] getProperties() <br />
 public char getIcon() <br />
 public boolean getInJail <br />
