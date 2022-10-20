@@ -21,6 +21,18 @@ public class Main {
 
         // Game setup
         Game game = new Game(players, gameBoard);
+
+        while(true) {
+            Player currentPlayer = (Player) players.first.t;
+            turn(currentPlayer);
+            players.first = players.first.nextLink;
+
+            Scanner in = new Scanner(System.in);
+            System.out.println("Is the game over?");
+            if(in.nextLine().equals("y")) {
+                System.exit(0);
+            }
+        }
     }
 
     // Prompts User For Players
@@ -61,10 +73,15 @@ public class Main {
 
     // Runs A Turn
     public static void turn(Player player) {
-        Random rand = new Random();
-        int diceRoll = rand.nextInt(1, 7);
-        System.out.println(player.getIcon() + ", you rolled a " + diceRoll);
-        player.setCurrentSpace(player.getCurrentSpace() + diceRoll);
+        int max = 6;
+        int min = 1;
+        int diceRoll = (int)Math.floor(Math.random()*(max-min+1)+min);
+        int diceRoll2 = (int)Math.floor(Math.random()*(max-min+1)+min);
+        System.out.println(player.getIcon() + ", you rolled a " + (diceRoll) + " and a " + diceRoll2);
+        if(diceRoll == diceRoll2) {
+            System.out.println("Wow, double roll! Extra Turn Time!");
+        }
+        player.setCurrentSpace(player.getCurrentSpace() + (diceRoll+diceRoll2));
     }
 
     // Moves player
