@@ -12,12 +12,21 @@ public class Player {
     BoardSpace properties[];
     char icon;
     boolean inJail;
+    int currentSpace;
 
     public Player(int balance, BoardSpace[] properties, char icon, boolean inJail) {
         this.balance = balance;
         this.properties = properties;
         this.icon = icon;
         this.inJail = inJail;
+    }
+
+    public int getCurrentSpace() {
+        return currentSpace;
+    }
+
+    public void setCurrentSpace(int currentSpace) {
+        this.currentSpace = currentSpace;
     }
 
     public boolean isInJail() {

@@ -11,7 +11,7 @@ public class BoardSpace {
     int tax;
     String name;
     boolean isPurchasable;
-
+    Player[] currentPlayers;
 
     public BoardSpace(Player owner, int cost, int tax, String name, boolean isPurchasable) {
         this.owner = owner;
@@ -19,8 +19,16 @@ public class BoardSpace {
         this.tax = tax;
         this.name = name;
         this.isPurchasable = isPurchasable;
+        currentPlayers = new Player[6];
     }
 
+    public Player[] getCurrentPlayers() {
+        return currentPlayers;
+    }
+
+    public void setCurrentPlayers(Player[] currentPlayers) {
+        this.currentPlayers = currentPlayers;
+    }
     public Player getOwner() {
         return owner;
     }

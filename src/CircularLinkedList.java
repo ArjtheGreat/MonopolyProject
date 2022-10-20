@@ -8,15 +8,26 @@ public class CircularLinkedList<T> {
 
     public T t;
     Link first;
+    Link last;
 
     public CircularLinkedList(T t) {
         this.t = t;
     }
-
+    public boolean isEmpty() {
+        return first == null;
+    }
     public void insertFirst(T newData) {
-        Link node = new Link(newData);
-        node.nextLink = first;
-        first = node;
+        if(isEmpty()) {
+            Link node = new Link(newData);
+            first = node;
+            last = node;
+        }
+        else {
+            Link node = new Link(newData);
+            node.nextLink = first;
+            first = node;
+            last.nextLink = first;
+        }
     }
 
     public Link search(Object value) {
@@ -29,5 +40,18 @@ public class CircularLinkedList<T> {
         }
         System.out.println("This value is not in the Linked List");
         return null;
+    }
+
+    public String toString()
+    {
+        String out = "";
+        Link temp = first;
+        if (first != null) {
+            do {
+                out += (temp.t + " ");
+                temp = temp.nextLink;
+            } while (temp != first);
+        }
+        return out;
     }
 }

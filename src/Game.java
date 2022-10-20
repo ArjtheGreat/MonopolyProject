@@ -25,6 +25,15 @@ public class Game {
         return gameBoard;
     }
 
+    public BoardSpace getBoardSpace(int x) {
+        Link y = getGameBoard().first;
+        while(x > -1) {
+            y = y.nextLink;
+            x--;
+        }
+        return (BoardSpace) y.t;
+    }
+
     public void setGameBoard(CircularLinkedList<BoardSpace> gameBoard) {
         this.gameBoard = gameBoard;
     }
