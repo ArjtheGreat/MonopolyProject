@@ -1,23 +1,24 @@
 /*********************
  *
- * Author: Arjun Maitra and Elliot Duke
+ * Author: Arjun Maitra and Elliott Duke
  * Assignment: Monopoly, BoardSpace Class
  * Date due: 10/26
  */
 public class BoardSpace {
     Player owner;
-
     int cost;
     int tax;
     String name;
+    String printName;
     boolean isPurchasable;
     Player[] currentPlayers;
 
-    public BoardSpace(Player owner, int cost, int tax, String name, boolean isPurchasable) {
+    public BoardSpace(Player owner, int cost, int tax, String name, String printName, boolean isPurchasable) {
         this.owner = owner;
         this.cost = cost;
         this.tax = tax;
         this.name = name;
+        this.printName = printName;
         this.isPurchasable = isPurchasable;
         currentPlayers = new Player[6];
     }

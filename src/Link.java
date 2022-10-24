@@ -1,6 +1,6 @@
 /*********************
  *
- * Author: Arjun Maitra and Elliot Duke
+ * Author: Arjun Maitra and Elliott Duke
  * Assignment: Monopoly, Link Class
  * Date due: 10/26
  */
