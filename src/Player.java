@@ -60,4 +60,8 @@ public class Player {
     public void setIcon(char icon) {
         this.icon = icon;
     }
+
+    public String toString() {
+        return name;
+    }
 }

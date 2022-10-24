@@ -67,4 +67,8 @@ public class BoardSpace {
     public void setPurchasable(boolean purchasable) {
         isPurchasable = purchasable;
     }
+
+    public String toString() {
+        return name;
+    }
 }
