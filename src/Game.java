@@ -47,9 +47,11 @@ public class Game {
         //initialize height and width of window and lineStr
         int height = 11;
         int width = 11;
-        BoardSpace current = (BoardSpace) gameBoard.first;
+
+        Link currentLink = gameBoard.first;
+        BoardSpace current = gameBoard.t;
         //String currentSpace = ;
-        String lineSpace = "| "+currentSpace+" ";
+        String lineSpace = "| "+current.printName+" ";
         //for each row in the window, print what should be on that row in a battle, depending on what row its on
         System.out.println(capDivider);
         for (int r = 0; r < height; r++) {
@@ -76,8 +78,7 @@ public class Game {
                 System.out.println(lineDivider + blankSpace + lineDivider);
             }
         }
-        currentSpace = currentSpace.nextLink;
-
+        currentLink = currentLink.nextLink;
         //print the bottom divider
         System.out.println(capDivider);
 
