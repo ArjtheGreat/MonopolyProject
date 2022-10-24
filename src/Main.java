@@ -20,83 +20,84 @@ public class Main {
 
 
         CircularLinkedList<BoardSpace> gameBoard = new CircularLinkedList<>(go);
-        BoardSpace MediterraneanAvenue = new BoardSpace(null, 0, 0, "Mediterranean Avenue", false);
 
         BoardSpace communityChest = new BoardSpace(null, 0, 0, "Community Chest", false);
 
-        BoardSpace balticAvenue = new BoardSpace(null, 0, 0, "Baltic Avenue", false);
+        BoardSpace MediterraneanAvenue = new BoardSpace(null, 60, 2, "Mediterranean Avenue", true );
+
+        BoardSpace balticAvenue = new BoardSpace(null, 60, 4, "Baltic Avenue", true);
 
         BoardSpace incomeTax = new BoardSpace(null, 0, 0, "Income Tax", false);
 
-        BoardSpace readingRailroad = new BoardSpace(null, 0, 0, "Reading Railroad", false);
+        BoardSpace readingRailroad = new BoardSpace(null, 200, 25, "Reading Railroad", true);
 
-        BoardSpace orientalAvenue = new BoardSpace(null, 0, 0, "Oriental Avenue", false);
+        BoardSpace orientalAvenue = new BoardSpace(null, 100, 4, "Oriental Avenue", true);
 
         BoardSpace chance = new BoardSpace(null, 0, 0, "Chance", false);
 
-        BoardSpace vermontAvenue = new BoardSpace(null, 0, 0, "Vermont Avenue", false);
+        BoardSpace vermontAvenue = new BoardSpace(null, 100, 6, "Vermont Avenue", true);
 
-        BoardSpace connecticutAvenue = new BoardSpace(null, 0, 0, "Connecticut Avenue", false);
+        BoardSpace connecticutAvenue = new BoardSpace(null, 120, 8, "Connecticut Avenue", true);
 
         BoardSpace jail = new BoardSpace(null, 0, 0, "Jail / Just Visiting", false);
 
-        BoardSpace stCharlesPlace = new BoardSpace(null, 0, 0, "St. Charles Place", false);
+        BoardSpace stCharlesPlace = new BoardSpace(null, 140, 10, "St. Charles Place", true);
 
-        BoardSpace electricCompany = new BoardSpace(null, 0, 0, "Electric Company", false);
+        BoardSpace electricCompany = new BoardSpace(null, 150, 4, "Electric Company", true);
 
-        BoardSpace statesAvenue = new BoardSpace(null, 0, 0, "States Avenue", false);
+        BoardSpace statesAvenue = new BoardSpace(null, 140, 10, "States Avenue", true);
 
-        BoardSpace virginiaAvenue = new BoardSpace(null, 0, 0, "Virginia Avenue", false);
+        BoardSpace virginiaAvenue = new BoardSpace(null, 160, 12, "Virginia Avenue", true);
 
-        BoardSpace pennsylvaniaRailroad = new BoardSpace(null, 0, 0, "Pennsylvania Railroad", false);
+        BoardSpace pennsylvaniaRailroad = new BoardSpace(null, 200, 25, "Pennsylvania Railroad", true);
 
-        BoardSpace stJamesPlace = new BoardSpace(null, 0, 0, "St. James Place", false);
+        BoardSpace stJamesPlace = new BoardSpace(null, 180, 14, "St. James Place", true);
 
         BoardSpace communityChestTwo = new BoardSpace(null, 0, 0, "Community Chest", false);
 
-        BoardSpace tennesseeAvenue = new BoardSpace(null, 0, 0, "Tennessee Avenue", false);
+        BoardSpace tennesseeAvenue = new BoardSpace(null, 180, 14, "Tennessee Avenue", true);
 
-        BoardSpace newYorkAvenue = new BoardSpace(null, 0, 0, "New York Avenue", false);
+        BoardSpace newYorkAvenue = new BoardSpace(null, 200, 16, "New York Avenue", true);
 
         BoardSpace freeParking = new BoardSpace(null, 0, 0, "Free Parking", false);
 
-        BoardSpace kentuckyAvenue = new BoardSpace(null, 0, 0, "Kentucky Avenue", false);
+        BoardSpace kentuckyAvenue = new BoardSpace(null, 220, 18, "Kentucky Avenue", true);
 
         BoardSpace chanceTwo = new BoardSpace(null, 0, 0, "Chance", false);
 
-        BoardSpace indianaAvenue = new BoardSpace(null, 0, 0, "Indiana Avenue", false);
+        BoardSpace indianaAvenue = new BoardSpace(null, 220, 18, "Indiana Avenue", true);
 
-        BoardSpace illinoisAvenue = new BoardSpace(null, 0, 0, "Illinois Avenue", false);
+        BoardSpace illinoisAvenue = new BoardSpace(null, 240, 20, "Illinois Avenue", true);
 
-        BoardSpace bandoRailroad = new BoardSpace(null, 0, 0, "B. & O. Railroad", false);
+        BoardSpace bandoRailroad = new BoardSpace(null, 200, 25, "B. & O. Railroad", true);
 
-        BoardSpace atlanticAvenue = new BoardSpace(null, 0, 0, "Atlantic Avenue", false);
+        BoardSpace atlanticAvenue = new BoardSpace(null, 260, 22, "Atlantic Avenue", true);
 
-        BoardSpace ventnorAvenue = new BoardSpace(null, 0, 0, "Ventnor Avenue", false);
+        BoardSpace ventnorAvenue = new BoardSpace(null, 260, 22, "Ventnor Avenue", true);
 
-        BoardSpace waterWorks = new BoardSpace(null, 0, 0, "Water Works", false);
+        BoardSpace waterWorks = new BoardSpace(null, 150, 4, "Water Works", true);
 
-        BoardSpace marvinGardens = new BoardSpace(null, 0, 0, "Marvin Gardens", false);
+        BoardSpace marvinGardens = new BoardSpace(null, 280, 24, "Marvin Gardens", true);
 
         BoardSpace gotojail = new BoardSpace(null, 0, 0, "Go To Jail", false);
 
-        BoardSpace pacificAvenue = new BoardSpace(null, 0, 0, "Pacific Avenue", false);
+        BoardSpace pacificAvenue = new BoardSpace(null, 300, 26, "Pacific Avenue", true);
 
-        BoardSpace northCarolinaAvenue = new BoardSpace(null, 0, 0, "North Carolina Avenue", false);
+        BoardSpace northCarolinaAvenue = new BoardSpace(null, 300, 26, "North Carolina Avenue", true);
 
         BoardSpace communityChestThree = new BoardSpace(null, 0, 0, "Community Chest", false);
 
-        BoardSpace pennsylvaniaAvenue = new BoardSpace(null, 0, 0, "Pennsylvania Avenue", false);
+        BoardSpace pennsylvaniaAvenue = new BoardSpace(null, 320, 28, "Pennsylvania Avenue", true);
 
-        BoardSpace shortLine = new BoardSpace(null, 0, 0, "Short Line", false);
+        BoardSpace shortLine = new BoardSpace(null, 200, 26, "Short Line", true);
 
         BoardSpace chanceThree = new BoardSpace(null, 0, 0, "Chance", false);
 
-        BoardSpace parkPlace = new BoardSpace(null, 0, 0, "Park Place", false);
+        BoardSpace parkPlace = new BoardSpace(null, 350, 35, "Park Place", true);
 
         BoardSpace luxuryTax = new BoardSpace(null, 0, 0, "Luxury Tax", false);
 
-        BoardSpace boardwalk = new BoardSpace(null, 0, 0, "Boardwalk", false);
+        BoardSpace boardwalk = new BoardSpace(null, 400, 50, "Boardwalk", true);
 
         gameBoard.insertFirst(boardwalk);
 
