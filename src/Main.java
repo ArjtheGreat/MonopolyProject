@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -175,6 +176,86 @@ public class Main {
 
         gameBoard.insertFirst(go);
 
+        ArrayList<BoardSpace> storage = new ArrayList<>();
+
+        storage.add(go);
+
+        storage.add(communityChest);
+
+        storage.add(balticAvenue);
+
+        storage.add(incomeTax);
+
+        storage.add(readingRailroad);
+
+        storage.add(orientalAvenue);
+
+        storage.add(chance);
+
+        storage.add(vermontAvenue);
+
+        storage.add(connecticutAvenue);
+
+        storage.add(jail);
+
+        storage.add(stCharlesPlace);
+
+        storage.add(electricCompany);
+
+        storage.add(statesAvenue);
+
+        storage.add(virginiaAvenue);
+
+        storage.add(pennsylvaniaRailroad);
+
+        storage.add(stJamesPlace);
+
+        storage.add(communityChestTwo);
+
+        storage.add(tennesseeAvenue);
+
+        storage.add(newYorkAvenue);
+
+        storage.add(freeParking);
+
+        storage.add(kentuckyAvenue);
+
+        storage.add(chanceTwo);
+
+        storage.add(indianaAvenue);
+
+        storage.add(illinoisAvenue);
+
+        storage.add(bandoRailroad);
+
+        storage.add(atlanticAvenue);
+
+        storage.add(ventnorAvenue);
+
+        storage.add(waterWorks);
+
+        storage.add(marvinGardens);
+
+        storage.add(gotojail);
+
+        storage.add(pacificAvenue);
+
+        storage.add(northCarolinaAvenue);
+
+        storage.add(communityChestThree);
+
+        storage.add(pennsylvaniaAvenue);
+
+        storage.add(shortLine);
+
+        storage.add(chanceThree);
+
+        storage.add(parkPlace);
+
+        storage.add(luxuryTax);
+
+        storage.add(boardwalk);
+
         System.out.println(gameBoard);
 
 
@@ -183,7 +264,7 @@ public class Main {
 
         while(true) {
             Player currentPlayer = (Player) players.first.t;
-            turn(currentPlayer);
+            turn(currentPlayer, storage);
             move(currentPlayer, game);
             players.first = players.first.nextLink;
 
@@ -232,16 +313,17 @@ public class Main {
     }
 
     // Runs A Turn
-    public static void turn(Player player) {
+    public static void turn(Player player, ArrayList<BoardSpace> storage) {
         int max = 6;
         int min = 1;
         int diceRoll = (int)Math.floor(Math.random()*(max-min+1)+min);
         int diceRoll2 = (int)Math.floor(Math.random()*(max-min+1)+min);
-        System.out.println(player.getIcon() + ", you rolled a " + (diceRoll) + " and a " + diceRoll2);
+        System.out.println(player.getIcon() + ", you rolled a " + (diceRoll) + " and a " + diceRoll2 + ". You were on " + storage.get(player.getCurrentSpace()));
         if(diceRoll == diceRoll2) {
             System.out.println("Wow, double roll! Extra Turn Time!");
         }
         player.setCurrentSpace(player.getCurrentSpace() + (diceRoll+diceRoll2));
+        System.out.println("Now " + player.getIcon() +  " is on " + storage.get(player.getCurrentSpace()));
     }
 
     // Moves player

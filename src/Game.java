@@ -51,7 +51,7 @@ public class Game {
         Link currentLink = gameBoard.first;
         BoardSpace current = gameBoard.t;
         //String currentSpace = ;
-        String lineSpace = "| "+current.printName+" ";
+        String lineSpace = "| "+current.getName()+" ";
         //for each row in the window, print what should be on that row in a battle, depending on what row its on
         System.out.println(capDivider);
         for (int r = 0; r < height; r++) {
