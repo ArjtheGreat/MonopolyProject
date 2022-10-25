@@ -49,22 +49,26 @@ public class Game {
         int width = 11;
 
         Link currentLink = gameBoard.first;
-        BoardSpace current = gameBoard.t;
-        //String currentSpace = ;
-        String lineSpace = "| "+current.getName()+" ";
+        BoardSpace currentSpace = gameBoard.t;
+        String lineSpace = "| "+currentSpace.toString()+" ";
         //for each row in the window, print what should be on that row in a battle, depending on what row its on
         System.out.println(capDivider);
         for (int r = 0; r < height; r++) {
             if (r == 0) {
                 for(int c = 0;c<width;c++){
                     System.out.print(lineSpace);
+                    currentLink = currentLink.nextLink;
+                    lineSpace = "| "+currentLink.t.toString()+" ";
                 }
                 System.out.println('|');
                 System.out.println(capDivider);
+
             }
             else if (r == 5) {
                 System.out.println(lineSpace+side+halfBlank+"MONOPOLY"+halfBlank+lineSpace+side);
                 System.out.println(lineDivider + blankSpace + lineDivider);
+                currentLink = currentLink.nextLink;
+                lineSpace = "| "+currentLink.t.toString()+" ";
             }
             else if (r == 10) {
                 System.out.println(capDivider);
@@ -72,15 +76,20 @@ public class Game {
                     System.out.print(lineSpace);
                 }
                 System.out.println('|');
+                currentLink = currentLink.nextLink;
+                lineSpace = "| "+currentLink.t.toString()+" ";
             }
             else {
                 System.out.println(lineSpace+side+blankSpace+lineSpace+side);
                 System.out.println(lineDivider + blankSpace + lineDivider);
+                currentLink = currentLink.nextLink;
+                lineSpace = "| "+currentLink.t.toString()+" ";
             }
         }
-        currentLink = currentLink.nextLink;
+
         //print the bottom divider
         System.out.println(capDivider);
 
     }
+
 }

@@ -24,21 +24,20 @@ public class BoardSpace {
     public Player[] getCurrentPlayers() {
         return currentPlayers;
     }
-
     public void setCurrentPlayers(Player[] currentPlayers) {
         this.currentPlayers = currentPlayers;
     }
+
     public Player getOwner() {
         return owner;
     }
-
     public void setOwner(Player owner) {
         this.owner = owner;
     }
+
     public int getCost() {
         return cost;
     }
-
     public void setCost(int cost) {
         this.cost = cost;
     }
@@ -46,7 +45,6 @@ public class BoardSpace {
     public int getTax() {
         return tax;
     }
-
     public void setTax(int tax) {
         this.tax = tax;
     }
@@ -54,7 +52,6 @@ public class BoardSpace {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -62,12 +59,11 @@ public class BoardSpace {
     public boolean isPurchasable() {
         return isPurchasable;
     }
-
     public void setPurchasable(boolean purchasable) {
         isPurchasable = purchasable;
     }
 
     public String toString() {
-        return name;
+        return name.substring(0,2);
     }
 }
