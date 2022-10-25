@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Properties;
+
 /*********************
  *
  * Author: Arjun Maitra and Elliot Duke
@@ -9,12 +12,12 @@
 
 public class Player {
     int balance;
-    BoardSpace properties[];
+    ArrayList<BoardSpace> properties;
     char icon;
     boolean inJail;
     int currentSpace;
 
-    public Player(int balance, BoardSpace[] properties, char icon, boolean inJail) {
+    public Player(int balance, ArrayList<BoardSpace> properties, char icon, boolean inJail) {
         this.balance = balance;
         this.properties = properties;
         this.icon = icon;
@@ -45,12 +48,12 @@ public class Player {
         this.balance = balance;
     }
 
-    public BoardSpace[] getProperties() {
+    public ArrayList<BoardSpace> getProperties() {
         return properties;
     }
 
-    public void setProperties(BoardSpace[] properties) {
-        this.properties = properties;
+    public void addProperty(BoardSpace property) {
+        properties.add(property);
     }
 
     public char getIcon() {

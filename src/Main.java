@@ -23,81 +23,81 @@ public class Main {
 
         BoardSpace communityChest = new BoardSpace(null, 0, 0, "Community Chest", false);
 
-        BoardSpace MediterraneanAvenue = new BoardSpace(null, 60, 2, "Mediterranean Avenue", true );
+        BoardSpace MediterraneanAvenue = new BoardSpace(null, 60, 2, "Narrow Sea", true );
 
-        BoardSpace balticAvenue = new BoardSpace(null, 60, 4, "Baltic Avenue", true);
+        BoardSpace balticAvenue = new BoardSpace(null, 60, 4, "Pentos", true);
 
         BoardSpace incomeTax = new BoardSpace(null, 0, 0, "Income Tax", false);
 
-        BoardSpace readingRailroad = new BoardSpace(null, 200, 25, "Reading Railroad", true);
+        BoardSpace readingRailroad = new BoardSpace(null, 200, 25, "Kingsroad", true);
 
-        BoardSpace orientalAvenue = new BoardSpace(null, 100, 4, "Oriental Avenue", true);
+        BoardSpace orientalAvenue = new BoardSpace(null, 100, 4, "Asshai", true);
 
         BoardSpace chance = new BoardSpace(null, 0, 0, "Chance", false);
 
-        BoardSpace vermontAvenue = new BoardSpace(null, 100, 6, "Vermont Avenue", true);
+        BoardSpace vermontAvenue = new BoardSpace(null, 100, 6, "Dorne", true);
 
-        BoardSpace connecticutAvenue = new BoardSpace(null, 120, 8, "Connecticut Avenue", true);
+        BoardSpace connecticutAvenue = new BoardSpace(null, 120, 8, "Highgarden", true);
 
-        BoardSpace jail = new BoardSpace(null, 0, 0, "Jail / Just Visiting", false);
+        BoardSpace jail = new BoardSpace(null, 0, 0, "Dungeons", false);
 
-        BoardSpace stCharlesPlace = new BoardSpace(null, 140, 10, "St. Charles Place", true);
+        BoardSpace stCharlesPlace = new BoardSpace(null, 140, 10, "Casterly Rock", true);
 
         BoardSpace electricCompany = new BoardSpace(null, 150, 4, "Electric Company", true);
 
-        BoardSpace statesAvenue = new BoardSpace(null, 140, 10, "States Avenue", true);
+        BoardSpace statesAvenue = new BoardSpace(null, 140, 10, "Flea Bottom", true);
 
-        BoardSpace virginiaAvenue = new BoardSpace(null, 160, 12, "Virginia Avenue", true);
+        BoardSpace virginiaAvenue = new BoardSpace(null, 160, 12, "Stark's Realm", true);
 
-        BoardSpace pennsylvaniaRailroad = new BoardSpace(null, 200, 25, "Pennsylvania Railroad", true);
+        BoardSpace pennsylvaniaRailroad = new BoardSpace(null, 200, 25, "Eastern Road", true);
 
-        BoardSpace stJamesPlace = new BoardSpace(null, 180, 14, "St. James Place", true);
+        BoardSpace stJamesPlace = new BoardSpace(null, 180, 14, "High Septon Place", true);
 
         BoardSpace communityChestTwo = new BoardSpace(null, 0, 0, "Community Chest", false);
 
-        BoardSpace tennesseeAvenue = new BoardSpace(null, 180, 14, "Tennessee Avenue", true);
+        BoardSpace tennesseeAvenue = new BoardSpace(null, 180, 14, "The Twins", true);
 
-        BoardSpace newYorkAvenue = new BoardSpace(null, 200, 16, "New York Avenue", true);
+        BoardSpace newYorkAvenue = new BoardSpace(null, 200, 16, "Storm's End", true);
 
-        BoardSpace freeParking = new BoardSpace(null, 0, 0, "Free Parking", false);
+        BoardSpace freeParking = new BoardSpace(null, 0, 0, "Free Horse Parking", false);
 
-        BoardSpace kentuckyAvenue = new BoardSpace(null, 220, 18, "Kentucky Avenue", true);
+        BoardSpace kentuckyAvenue = new BoardSpace(null, 220, 18, "Dragonstone", true);
 
         BoardSpace chanceTwo = new BoardSpace(null, 0, 0, "Chance", false);
 
-        BoardSpace indianaAvenue = new BoardSpace(null, 220, 18, "Indiana Avenue", true);
+        BoardSpace indianaAvenue = new BoardSpace(null, 220, 18, "Vale", true);
 
-        BoardSpace illinoisAvenue = new BoardSpace(null, 240, 20, "Illinois Avenue", true);
+        BoardSpace illinoisAvenue = new BoardSpace(null, 240, 20, "Sept of Baelor", true);
 
-        BoardSpace bandoRailroad = new BoardSpace(null, 200, 25, "B. & O. Railroad", true);
+        BoardSpace bandoRailroad = new BoardSpace(null, 200, 25, "Northern Road", true);
 
-        BoardSpace atlanticAvenue = new BoardSpace(null, 260, 22, "Atlantic Avenue", true);
+        BoardSpace atlanticAvenue = new BoardSpace(null, 260, 22, "Riverrun", true);
 
-        BoardSpace ventnorAvenue = new BoardSpace(null, 260, 22, "Ventnor Avenue", true);
+        BoardSpace ventnorAvenue = new BoardSpace(null, 260, 22, "Braavos", true);
 
         BoardSpace waterWorks = new BoardSpace(null, 150, 4, "Water Works", true);
 
-        BoardSpace marvinGardens = new BoardSpace(null, 280, 24, "Marvin Gardens", true);
+        BoardSpace marvinGardens = new BoardSpace(null, 280, 24, "Aegon's Gardens", true);
 
         BoardSpace gotojail = new BoardSpace(null, 0, 0, "Go To Jail", false);
 
-        BoardSpace pacificAvenue = new BoardSpace(null, 300, 26, "Pacific Avenue", true);
+        BoardSpace pacificAvenue = new BoardSpace(null, 300, 26, "Pyke", true);
 
-        BoardSpace northCarolinaAvenue = new BoardSpace(null, 300, 26, "North Carolina Avenue", true);
+        BoardSpace northCarolinaAvenue = new BoardSpace(null, 300, 26, "Red Keep", true);
 
         BoardSpace communityChestThree = new BoardSpace(null, 0, 0, "Community Chest", false);
 
-        BoardSpace pennsylvaniaAvenue = new BoardSpace(null, 320, 28, "Pennsylvania Avenue", true);
+        BoardSpace pennsylvaniaAvenue = new BoardSpace(null, 320, 28, "Hardhome", true);
 
         BoardSpace shortLine = new BoardSpace(null, 200, 26, "Short Line", true);
 
         BoardSpace chanceThree = new BoardSpace(null, 0, 0, "Chance", false);
 
-        BoardSpace parkPlace = new BoardSpace(null, 350, 35, "Park Place", true);
+        BoardSpace parkPlace = new BoardSpace(null, 350, 35, "The Stepstones", true);
 
         BoardSpace luxuryTax = new BoardSpace(null, 0, 0, "Luxury Tax", false);
 
-        BoardSpace boardwalk = new BoardSpace(null, 400, 50, "Boardwalk", true);
+        BoardSpace boardwalk = new BoardSpace(null, 400, 50, "The Wall", true);
 
         gameBoard.insertFirst(boardwalk);
 
@@ -260,13 +260,16 @@ public class Main {
         System.out.println(gameBoard);
 
 
+
+
         // Game setup
         Game game = new Game(players, gameBoard);
-
+        game.printBoard();
         while(true) {
             Player currentPlayer = (Player) players.first.t;
             turn(currentPlayer, storage);
             move(currentPlayer, game);
+            System.out.println(currentPlayer.getBalance() + ", " + currentPlayer.getProperties());
             players.first = players.first.nextLink;
 
             Scanner in = new Scanner(System.in);
@@ -291,7 +294,7 @@ public class Main {
             // Create New Player
             System.out.println("Player " + numPlayers + " character: ");
             char icon = in.nextLine().toCharArray()[0];
-            BoardSpace[] properties = new BoardSpace[28];
+            ArrayList<BoardSpace> properties = new ArrayList<BoardSpace>();
             Player player = new Player(1500, properties, icon, false);
             player.setCurrentSpace(0);
             players.insertFirst(player);
@@ -323,17 +326,65 @@ public class Main {
         if(diceRoll == diceRoll2) {
             System.out.println("Wow, double roll! Extra Turn Time!");
         }
-        player.setCurrentSpace(player.getCurrentSpace() + (diceRoll+diceRoll2));
+        if(player.getCurrentSpace() + (diceRoll) > 39) {
+            player.setBalance(player.getBalance() + 200);
+            player.setCurrentSpace(Math.abs(player.getCurrentSpace() + (diceRoll) - 40) + 1);
+        }
+        else {
+            player.setCurrentSpace(player.getCurrentSpace() + (diceRoll));
+        }
         System.out.println("Now " + player.getIcon() +  " is on " + storage.get(player.getCurrentSpace()));
     }
 
+
+
     // Moves player
     public static void move(Player player, Game game) {
-        for(int i = 0; i <game.getBoardSpace(player.getCurrentSpace()).getCurrentPlayers().length; i++) {
-            if(game.getBoardSpace(player.getCurrentSpace()).getCurrentPlayers()[i] == null) {
-                game.getBoardSpace(player.getCurrentSpace()).getCurrentPlayers()[i] = player;
+        for(int i = 0; i <game.getBoardSpace(player.getCurrentSpace()-1).getCurrentPlayers().length; i++) {
+            if(game.getBoardSpace(player.getCurrentSpace()-1).getCurrentPlayers()[i] == null) {
+                game.getBoardSpace(player.getCurrentSpace()-1).getCurrentPlayers()[i] = player;
+                if(game.getBoardSpace(player.getCurrentSpace()-1).isPurchasable() && game.getBoardSpace(player.getCurrentSpace()-1).getOwner() == null) {
+
+                    Scanner in = new Scanner(System.in);
+                    System.out.println("Would you like to purchase this property?");
+                    if(in.nextLine().equals("y")) {
+                        player.setBalance(player.getBalance()-game.getBoardSpace(player.getCurrentSpace()-1).cost);
+                        game.getBoardSpace(player.getCurrentSpace()-1).setOwner(player);
+                        game.getBoardSpace(player.getCurrentSpace()-1).setPurchasable(false);
+                        player.addProperty(game.getBoardSpace(player.getCurrentSpace()-1));
+                    }
+                }
+                else {
+                    if(game.getBoardSpace(player.getCurrentSpace()-1).getOwner() == player) {
+
+                    }
+                    else {
+                        player.setBalance(player.getBalance() - getBoardSpaceCost(game.getBoardSpace(player.getCurrentSpace()-1), player.getBalance()));
+                    }
+
+                }
                 break;
             }
         }
+    }
+
+    public static int getBoardSpaceCost(BoardSpace space, int balance) {
+        Scanner in = new Scanner(System.in);
+        if(space.getOwner() != null) {
+            if(space.getName().equals("Income Tax") || space.getName().equals("luxury Tax")) {
+                System.out.println("Would you like to pay a flat $900 Dollar Fee or a 10% Tax ($/%)");
+                if(in.nextLine().equals("$")) {
+                    return -1 * 900;
+                }
+                else {
+                    return (int) (balance*0.1);
+                }
+            }
+            if(space.getName().equals("Community Chest")) {
+                // 900 Dollar Tax or 10% tax
+                return -1 * space.getCost();
+            }
+        }
+        return  1 * space.getTax();
     }
 }
