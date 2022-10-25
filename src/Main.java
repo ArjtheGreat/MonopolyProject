@@ -265,6 +265,7 @@ public class Main {
         // Game setup
         Game game = new Game(players, gameBoard);
         game.printBoard();
+        System.out.println("Welcome to Game of Thrones Monopoly. When you play the Game of Thrones, you win or you die. There is no middle ground. Let the game begin!");
         while(true) {
             Player currentPlayer = (Player) players.first.t;
             turn(currentPlayer, storage);
