@@ -126,11 +126,12 @@ public class Main {
 
             // Checks if has Get Out of Jail Free Card
             boolean getOutOfJailFreeAvailable = false;
-            for(BoardSpace space : player.getProperties()) {
-                if(space.getName().equals("Get Out Of Jail Free")) {
+            for(int i = 0; i<player.getProperties().size(); i++) {
+
+                if(player.getProperties().get(i).getName().equals("Get Out Of Jail Free")) {
                     getOutOfJailFreeAvailable = true;
                 }
-                player.getProperties().remove(space);
+                player.getProperties().remove(player.getProperties().get(i));
             }
             if(getOutOfJailFreeAvailable) {
                 System.out.println("You used your Get Out Of Jail Free Card to Get Out Of Jail.");

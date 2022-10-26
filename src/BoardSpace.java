@@ -69,6 +69,9 @@ public class BoardSpace {
 
     // Access name of space as a String
     public String toString() {
+        return name;
+    }
+    public String firstTwoChars() {
         return name.substring(0,2);
     }
 }
