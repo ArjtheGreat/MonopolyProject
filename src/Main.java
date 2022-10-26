@@ -276,7 +276,13 @@ public class Main {
             doubleRoll = false;
             Player currentPlayer = (Player) players.first.t;
             turn(currentPlayer, storage);
-            move(currentPlayer, game);
+            if(doubleRoll && currentPlayer.isInJail()) {
+                System.out.println("You got out of jail");
+                currentPlayer.setInJail(false);
+            }
+            else {
+                move(currentPlayer, game);
+            }
             System.out.println(currentPlayer.getIcon() + " currently Has: " + currentPlayer.getBalance() + " Gold Dragons, and they hold these properties: " + currentPlayer.getProperties());
             if(!doubleRoll) {
                 players.first = players.first.nextLink;
@@ -324,6 +330,18 @@ public class Main {
 
     // Runs A Turn
     public static void turn(Player player, ArrayList<BoardSpace> storage) {
+        // Pay Fine to get out of jail
+        if(player.isInJail()) {
+            Scanner in = new Scanner(System.in);
+            System.out.println("Do you wanna pay a $50 fine to get out of jail?");
+            String jailResponse = in.nextLine();
+            if(jailResponse.equals("y")) {
+                player.setBalance(player.getBalance()-50);
+                player.setInJail(false);
+            }
+        }
+
+        // Dice Rolling
         int max = 6;
         int min = 1;
         int diceRoll = (int)Math.floor(Math.random()*(max-min+1)+min);
@@ -384,7 +402,7 @@ public class Main {
                     if(game.getBoardSpace(player.getCurrentSpace()-1).getOwner() == player) {
 
                     }
-                    else if (game.getBoardSpace(player.getCurrentSpace()-1).getName().equals("Go to Dungeons")) {
+                    else if (game.getBoardSpace(player.getCurrentSpace()-1).getName().equals("Go To Dungeons")) {
                         player.setInJail(true);
                         player.setCurrentSpace(10);
                     }
