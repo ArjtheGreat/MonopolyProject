@@ -8,8 +8,7 @@ import java.util.Properties;
  * Date due: 10/26
  */
 
-// By Arjun
-
+// By Maitra
 public class Player {
     int balance;
     ArrayList<BoardSpace> properties;
@@ -17,6 +16,7 @@ public class Player {
     boolean inJail;
     int currentSpace;
 
+    // Constructor
     public Player(int balance, ArrayList<BoardSpace> properties, char icon, boolean inJail) {
         this.balance = balance;
         this.properties = properties;
@@ -24,6 +24,7 @@ public class Player {
         this.inJail = inJail;
     }
 
+    // Various Accessors and Mutators
     public int getCurrentSpace() {
         return currentSpace;
     }
@@ -64,6 +65,7 @@ public class Player {
         this.icon = icon;
     }
 
+    // Prints out the icon as a String
     public String toString() {
         return icon + "";
     }

@@ -8,11 +8,13 @@ public class Game {
     CircularLinkedList<Player> players;
     CircularLinkedList<BoardSpace> gameBoard;
 
+    // Constructor
     public Game(CircularLinkedList<Player> players, CircularLinkedList<BoardSpace> gameBoard) {
         this.players = players;
         this.gameBoard = gameBoard;
     }
 
+    // Accessors and Mutators
     public CircularLinkedList<Player> getPlayers() {
         return players;
     }
@@ -27,6 +29,7 @@ public class Game {
         this.gameBoard = gameBoard;
     }
 
+    // Gets the "x"th board space in the list
     public BoardSpace getBoardSpace(int x) {
         Link y = getGameBoard().first;
         while(x > -1) {
@@ -34,6 +37,21 @@ public class Game {
             x--;
         }
         return (BoardSpace) y.t;
+    }
+
+    public int getNumOwnedRailRoads() {
+        int num = 0;
+        Link temp = gameBoard.first.nextLink;
+        while(temp != gameBoard.first) {
+            BoardSpace space = (BoardSpace) temp.t;
+            if(space.getName().contains("Road")) {
+                if(space.getOwner() != null) {
+                    num++;
+                }
+            }
+            temp = temp.nextLink;
+        }
+        return num;
     }
 
     public void printBoard(){

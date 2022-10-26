@@ -8,6 +8,7 @@ public class Link<T> {
     public T t;
     Link nextLink;
 
+    // Constructors
     public Link(T t) {
         this.t = t;
     }
