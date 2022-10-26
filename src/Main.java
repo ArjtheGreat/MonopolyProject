@@ -9,11 +9,14 @@ import java.util.Scanner;
  * Date due: 10/26
  */
 public class Main {
+
+    // This is used for water works and electric company
+    static int lastDiceRoll;
     public static void main(String[] args) {
 
         // Players Set up
         CircularLinkedList<Player> players = getPlayers();
-        System.out.println(players);
+        System.out.println("Hello, " + players);
 
         // Board Set     up
         BoardSpace go = new BoardSpace(null, 0, 0, "Go", false);
@@ -29,7 +32,7 @@ public class Main {
 
         BoardSpace incomeTax = new BoardSpace(null, 0, 0, "Income Tax", false);
 
-        BoardSpace readingRailroad = new BoardSpace(null, 200, 25, "Kingsroad", true);
+        BoardSpace readingRailroad = new BoardSpace(null, 200, 25, "Kings Road", true);
 
         BoardSpace orientalAvenue = new BoardSpace(null, 100, 4, "Asshai", true);
 
@@ -43,7 +46,7 @@ public class Main {
 
         BoardSpace stCharlesPlace = new BoardSpace(null, 140, 10, "Casterly Rock", true);
 
-        BoardSpace electricCompany = new BoardSpace(null, 150, 4, "Electric Company", true);
+        BoardSpace electricCompany = new BoardSpace(null, 150, 4, "Dragon Breeder Company", true);
 
         BoardSpace statesAvenue = new BoardSpace(null, 140, 10, "Flea Bottom", true);
 
@@ -79,7 +82,7 @@ public class Main {
 
         BoardSpace marvinGardens = new BoardSpace(null, 280, 24, "Aegon's Gardens", true);
 
-        BoardSpace gotojail = new BoardSpace(null, 0, 0, "Go To Jail", false);
+        BoardSpace gotojail = new BoardSpace(null, 0, 0, "Go To Dungeons", false);
 
         BoardSpace pacificAvenue = new BoardSpace(null, 300, 26, "Pyke", true);
 
@@ -89,7 +92,7 @@ public class Main {
 
         BoardSpace pennsylvaniaAvenue = new BoardSpace(null, 320, 28, "Hardhome", true);
 
-        BoardSpace shortLine = new BoardSpace(null, 200, 26, "Short Line", true);
+        BoardSpace shortLine = new BoardSpace(null, 200, 26, "Valyrian Road", true);
 
         BoardSpace chanceThree = new BoardSpace(null, 0, 0, "Chance", false);
 
@@ -175,11 +178,15 @@ public class Main {
 
         gameBoard.insertFirst(communityChest);
 
+        gameBoard.insertFirst(MediterraneanAvenue);
+
         gameBoard.insertFirst(go);
 
         ArrayList<BoardSpace> storage = new ArrayList<>();
 
         storage.add(go);
+
+        storage.add(MediterraneanAvenue);
 
         storage.add(communityChest);
 
@@ -257,28 +264,19 @@ public class Main {
 
         storage.add(boardwalk);
 
-        System.out.println(gameBoard);
-
-
-
 
         // Game setup
         Game game = new Game(players, gameBoard);
-        game.printBoard();
         System.out.println("Welcome to Game of Thrones Monopoly. When you play the Game of Thrones, you win or you die. There is no middle ground. Let the game begin!");
-        while(true) {
+        while(!hasGameEnded(game)) {
             Player currentPlayer = (Player) players.first.t;
             turn(currentPlayer, storage);
             move(currentPlayer, game);
-            System.out.println(currentPlayer.getBalance() + ", " + currentPlayer.getProperties());
+            System.out.println(currentPlayer.getIcon() + " currently Has: " + currentPlayer.getBalance() + " Gold Dragons, and they hold these properties: " + currentPlayer.getProperties());
             players.first = players.first.nextLink;
-
-            Scanner in = new Scanner(System.in);
-            System.out.println("Is the game over?");
-            if(in.nextLine().equals("y")) {
-                System.exit(0);
-            }
+            game.printBoard();
         }
+        System.out.println("The Game of Thrones Has Ended. Only One Player Remains Supreme, They Have A Monopoly Over The Realm!");
     }
 
     // Prompts User For Players
@@ -327,9 +325,10 @@ public class Main {
         if(diceRoll == diceRoll2) {
             System.out.println("Wow, double roll! Extra Turn Time!");
         }
+        lastDiceRoll = diceRoll+diceRoll2;
         if(player.getCurrentSpace() + (diceRoll) > 39) {
             player.setBalance(player.getBalance() + 200);
-            player.setCurrentSpace(Math.abs(player.getCurrentSpace() + (diceRoll) - 40) + 1);
+            player.setCurrentSpace(Math.abs(player.getCurrentSpace() + (diceRoll) - 40));
         }
         else {
             player.setCurrentSpace(player.getCurrentSpace() + (diceRoll));
@@ -349,7 +348,23 @@ public class Main {
                     Scanner in = new Scanner(System.in);
                     System.out.println("Would you like to purchase this property?");
                     if(in.nextLine().equals("y")) {
-                        player.setBalance(player.getBalance()-game.getBoardSpace(player.getCurrentSpace()-1).cost);
+                        if(game.getBoardSpace(player.getCurrentSpace()-1).getName().contains("Road")) {
+                            if(game.getNumOwnedRailRoads() == 0) {
+                                player.setBalance(player.getBalance()-25);
+                            }
+                            if(game.getNumOwnedRailRoads() == 1) {
+                                player.setBalance(player.getBalance()-50);
+                            }
+                            if(game.getNumOwnedRailRoads() == 2) {
+                                player.setBalance(player.getBalance()-100);
+                            }
+                            if(game.getNumOwnedRailRoads() == 3) {
+                                player.setBalance(player.getBalance()-200);
+                            }
+                        }
+                        else {
+                            player.setBalance(player.getBalance()-game.getBoardSpace(player.getCurrentSpace()-1).cost);
+                        }
                         game.getBoardSpace(player.getCurrentSpace()-1).setOwner(player);
                         game.getBoardSpace(player.getCurrentSpace()-1).setPurchasable(false);
                         player.addProperty(game.getBoardSpace(player.getCurrentSpace()-1));
@@ -369,23 +384,54 @@ public class Main {
         }
     }
 
+    // Gets Cost of Landing on A Space
     public static int getBoardSpaceCost(BoardSpace space, int balance) {
         Scanner in = new Scanner(System.in);
-        if(space.getOwner() != null) {
-            if(space.getName().equals("Income Tax") || space.getName().equals("luxury Tax")) {
-                System.out.println("Would you like to pay a flat $900 Dollar Fee or a 10% Tax ($/%)");
-                if(in.nextLine().equals("$")) {
-                    return -1 * 900;
-                }
-                else {
-                    return (int) (balance*0.1);
-                }
+        if(space.getName().equals("Income Tax") || space.getName().equals("luxury Tax")) {
+            System.out.println("Would you like to pay a flat $900 Dollar Fee or a 10% Tax ($/%)");
+            if(in.nextLine().equals("$")) {
+                return -1 * 900;
             }
-            if(space.getName().equals("Community Chest")) {
-                // 900 Dollar Tax or 10% tax
-                return -1 * space.getCost();
+            else {
+                return (int) (balance*0.1);
             }
         }
+        if(space.getName().equals("Water Works") || space.getName().equals("Dragon Breeder Company")) {
+            int util = 0;
+            for(BoardSpace playerSpaces : space.getOwner().getProperties()) {
+                if(playerSpaces.getName().equals("Water Works") || playerSpaces.getName().equals("Dragon Breeder Company")) {
+                    util++;
+                }
+            }
+            if (util == 2) {
+                return lastDiceRoll * 10;
+            }
+            return lastDiceRoll*4;
+        }
+        if(space.getName().equals("Community Chest")) {
+            // 900 Dollar Tax or 10% tax
+            return 1 * space.getCost();
+        }
         return  1 * space.getTax();
+    }
+
+    public static boolean hasGameEnded(Game game) {
+        int numPlayersNotBankrupt = 0;
+        Link temp = game.getPlayers().first;
+        if(((Player) temp.t).getBalance() > 0) {
+            numPlayersNotBankrupt++;
+        }
+        temp = temp.nextLink;
+        while(temp != game.getPlayers().first) {
+            Player player = (Player) temp.t;
+            if(player.getBalance() > 0) {
+                numPlayersNotBankrupt++;
+            }
+            if(numPlayersNotBankrupt > 1) {
+                return false;
+            }
+            temp = temp.nextLink;
+        }
+        return true;
     }
 }

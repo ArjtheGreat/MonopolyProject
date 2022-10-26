@@ -36,6 +36,21 @@ public class Game {
         return (BoardSpace) y.t;
     }
 
+    public int getNumOwnedRailRoads() {
+        int num = 0;
+        Link temp = gameBoard.first.nextLink;
+        while(temp != gameBoard.first) {
+            BoardSpace space = (BoardSpace) temp.t;
+            if(space.getName().contains("Road")) {
+                if(space.getOwner() != null) {
+                    num++;
+                }
+            }
+            temp = temp.nextLink;
+        }
+        return num;
+    }
+
     public void printBoard(){
         //initialize dividers and spaces
         char side = '|';
