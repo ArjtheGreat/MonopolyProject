@@ -12,7 +12,10 @@ public class Main {
 
     // This is used for water works and electric company
     static int lastDiceRoll;
+
+    // This Is Used to Keep track if there is a double roll
     static boolean doubleRoll;
+
     public static void main(String[] args) {
 
         // Players Set up
@@ -43,7 +46,7 @@ public class Main {
 
         BoardSpace connecticutAvenue = new BoardSpace(null, 120, 8, "Highgarden", true);
 
-        BoardSpace jail = new BoardSpace(null, 0, 0, "Dungeons", false);
+        BoardSpace jail = new BoardSpace(null, 0, 0, "Dungeons Or Passing Through", false);
 
         BoardSpace stCharlesPlace = new BoardSpace(null, 140, 10, "Casterly Rock", true);
 
@@ -353,7 +356,8 @@ public class Main {
 
                     Scanner in = new Scanner(System.in);
                     System.out.println("Would you like to purchase this property?");
-                    if(in.nextLine().equals("y")) {
+                    String out = in.nextLine();
+                    if(out.equals("y")) {
                         if(game.getBoardSpace(player.getCurrentSpace()-1).getName().contains("Road")) {
                             if(game.getNumOwnedRailRoads() == 0) {
                                 player.setBalance(player.getBalance()-25);
@@ -379,6 +383,10 @@ public class Main {
                 else {
                     if(game.getBoardSpace(player.getCurrentSpace()-1).getOwner() == player) {
 
+                    }
+                    else if (game.getBoardSpace(player.getCurrentSpace()-1).getName().equals("Go to Dungeons")) {
+                        player.setInJail(true);
+                        player.setCurrentSpace(10);
                     }
                     else {
                         player.setBalance(player.getBalance() - getBoardSpaceCost(game.getBoardSpace(player.getCurrentSpace()-1), player.getBalance()));
