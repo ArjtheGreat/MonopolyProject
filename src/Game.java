@@ -57,10 +57,10 @@ public class Game {
     public void printBoard(){
         //initialize dividers and spaces
         char side = '|';
-        String blankSpace = "                                            ";
-        String halfBlank = "                  ";
-        String capDivider = "--------------------------------------------------------";
-        String lineDivider = "|----|";
+        String blankSpace = "                                                              ";
+        String halfBlank = "                           ";
+        String capDivider = "------------------------------------------------------------------------------";
+        String lineDivider = "|------|";
 
         //initialize height and width of window and lineStr
         int height = 11;
@@ -76,7 +76,7 @@ public class Game {
                 for(int c = 0;c<width;c++){
                     System.out.print(lineSpace);
                     currentLink = currentLink.nextLink;
-                    lineSpace = "| "+currentLink.t.toString()+" ";
+                    lineSpace = "|  "+currentLink.t.toString()+"  ";
                 }
                 System.out.println('|');
                 System.out.println(capDivider);
