@@ -16,6 +16,7 @@ public class Player {
     boolean inJail;
     int currentSpace;
 
+
     // Constructor
     public Player(int balance, ArrayList<BoardSpace> properties, char icon, boolean inJail) {
         this.balance = balance;

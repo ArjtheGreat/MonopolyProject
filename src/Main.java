@@ -310,6 +310,7 @@ public class Main {
                                     tempPlayer.setBalance(tempPlayer.getBalance()+150);
                                     player.setBalance(player.getBalance()-150);
                                 }
+                                temp = temp.nextLink;
                             }
                         }
                         // Building Loan
@@ -342,6 +343,83 @@ public class Main {
 
                 }
                 break;
+            }
+        }
+
+        // Trading Between Players
+        Scanner in = new Scanner(System.in);
+
+        // Prompt User For Trade
+        System.out.println("Would you like to trade with another player?");
+
+        if(in.nextLine().equals("y")) {
+
+            // Locate the Player to Trade with
+            boolean keepTrading = true;
+            while(keepTrading) {
+                System.out.println("Who would you like to trade with?");
+                String targetPLayer = in.nextLine();
+
+                // Temp Finds PLayer
+                Link temp = game.getPlayers().first;
+                while(!temp.t.toString().equals(targetPLayer)) { // Locates Player with Inputed Char
+                    temp = temp.nextLink;
+                }
+
+                // Print Out Players Info
+                Player x = (Player) temp.t;
+                System.out.println(x + " currently owns " + x.getProperties());
+
+                // Prompt Users for Traded Properties
+                System.out.println("What properties would you like to trade for? (x, y, z)");
+                ArrayList<BoardSpace> offeredProperties = new ArrayList<>();
+                String[] offeredPropertiesSplit = in.nextLine().split(", ");
+
+                // Added Properties to Offered Properties
+                for(int i = 0; i < offeredPropertiesSplit.length; i++) {
+                    for(BoardSpace y : x.getProperties()) {
+                        if(y.getName().equals(offeredPropertiesSplit[i])) {
+                            offeredProperties.add(y);
+                        }
+                    }
+                }
+
+                // Print Out Your Info
+                Player a = player;
+                System.out.println(a + " currently owns " + a.getProperties());
+
+                // Prompt Users for What Properties They Want To Trade
+                System.out.println("What properties would you like to give? (x, y, z)");
+                ArrayList<BoardSpace> givenProperties = new ArrayList<>();
+                String[] givenPropertiesSplit = in.nextLine().split(", ");
+
+                // Added Properties to Given Properties
+                for(int i = 0; i < givenPropertiesSplit.length; i++) {
+                    for(BoardSpace y : a.getProperties()) {
+                        if(y.getName().equals(givenPropertiesSplit[i])) {
+                            offeredProperties.add(y);
+                        }
+                    }
+                }
+
+                // Does User Accept
+                System.out.println(x + ", do you accept the trade? (y/n)");
+                String acceptedTrade = in.nextLine();
+                if(acceptedTrade.equals("y")) {
+                    for(BoardSpace space : offeredProperties) {
+                        System.out.println(space);
+                        x.getProperties().remove(space);
+                        a.getProperties().add(space);
+                    }
+                    for(BoardSpace space : givenProperties) {
+                        System.out.println(space);
+                        a.getProperties().remove(space);
+                        x.getProperties().add(space);
+                    }
+                    System.out.println("Now " + a + " owns " + a.getProperties());
+                    System.out.println("Now " + x + " owns " + x.getProperties());
+                }
+                keepTrading = false;
             }
         }
     }
