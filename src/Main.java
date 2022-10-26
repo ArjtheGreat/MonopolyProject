@@ -12,6 +12,7 @@ public class Main {
 
     // This is used for water works and electric company
     static int lastDiceRoll;
+    static boolean doubleRoll;
     public static void main(String[] args) {
 
         // Players Set up
@@ -269,11 +270,14 @@ public class Main {
         Game game = new Game(players, gameBoard);
         System.out.println("Welcome to Game of Thrones Monopoly. When you play the Game of Thrones, you win or you die. There is no middle ground. Let the game begin!");
         while(!hasGameEnded(game)) {
+            doubleRoll = false;
             Player currentPlayer = (Player) players.first.t;
             turn(currentPlayer, storage);
             move(currentPlayer, game);
             System.out.println(currentPlayer.getIcon() + " currently Has: " + currentPlayer.getBalance() + " Gold Dragons, and they hold these properties: " + currentPlayer.getProperties());
-            players.first = players.first.nextLink;
+            if(!doubleRoll) {
+                players.first = players.first.nextLink;
+            }
             game.printBoard();
         }
         System.out.println("The Game of Thrones Has Ended. Only One Player Remains Supreme, They Have A Monopoly Over The Realm!");
@@ -324,7 +328,9 @@ public class Main {
         System.out.println(player.getIcon() + ", you rolled a " + (diceRoll) + " and a " + diceRoll2 + ". You were on " + storage.get(player.getCurrentSpace()));
         if(diceRoll == diceRoll2) {
             System.out.println("Wow, double roll! Extra Turn Time!");
+            doubleRoll = true;
         }
+
         lastDiceRoll = diceRoll+diceRoll2;
         if(player.getCurrentSpace() + (diceRoll) > 39) {
             player.setBalance(player.getBalance() + 200);
@@ -389,8 +395,9 @@ public class Main {
         Scanner in = new Scanner(System.in);
         if(space.getName().equals("Income Tax") || space.getName().equals("luxury Tax")) {
             System.out.println("Would you like to pay a flat $900 Dollar Fee or a 10% Tax ($/%)");
-            if(in.nextLine().equals("$")) {
-                return -1 * 900;
+            String out = in.nextLine();
+            if(out.equals("$")) {
+                return 900;
             }
             else {
                 return (int) (balance*0.1);
