@@ -10,36 +10,34 @@ public class CircularLinkedList<T> {
     Link first;
     Link last;
 
+    // Constructor
     public CircularLinkedList(T t) {
         this.t = t;
     }
+
+    // Checks if List is empty
     public boolean isEmpty() {
         return first == null;
     }
+
+
+    // Inserts element into start of the list
     public void insertFirst(T newData) {
+
+        // Special Case - List is empty
         if(isEmpty()) {
             Link node = new Link(newData);
             first = node;
             last = node;
         }
+
+        // Normal Case, make sure last element points back to front
         else {
             Link node = new Link(newData);
             node.nextLink = first;
             first = node;
             last.nextLink = first;
         }
-    }
-
-    public Link search(Object value) {
-        Link currentLink = first;
-        while(currentLink != null) {
-            if(currentLink.t.equals(value)) {
-                return currentLink;
-            }
-            currentLink = currentLink.nextLink;
-        }
-        System.out.println("This value is not in the Linked List");
-        return null;
     }
 
     // PS - This was taken from GeeksForGeeks, just for testing purposes

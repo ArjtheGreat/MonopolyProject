@@ -8,11 +8,13 @@ public class Game {
     CircularLinkedList<Player> players;
     CircularLinkedList<BoardSpace> gameBoard;
 
+    // Constructor
     public Game(CircularLinkedList<Player> players, CircularLinkedList<BoardSpace> gameBoard) {
         this.players = players;
         this.gameBoard = gameBoard;
     }
 
+    // Accessors and Mutators
     public CircularLinkedList<Player> getPlayers() {
         return players;
     }
@@ -27,6 +29,7 @@ public class Game {
         this.gameBoard = gameBoard;
     }
 
+    // Gets the "x"th board space in the list
     public BoardSpace getBoardSpace(int x) {
         Link y = getGameBoard().first;
         while(x > -1) {

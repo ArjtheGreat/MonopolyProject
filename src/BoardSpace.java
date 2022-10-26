@@ -12,15 +12,17 @@ public class BoardSpace {
     boolean isPurchasable;
     Player[] currentPlayers;
 
+    // Constructor
     public BoardSpace(Player owner, int cost, int tax, String name, boolean isPurchasable) {
         this.owner = owner;
         this.cost = cost;
         this.tax = tax;
         this.name = name;
         this.isPurchasable = isPurchasable;
-        currentPlayers = new Player[6];
+        currentPlayers = new Player[6]; //Keeps track of players on the space
     }
 
+    // Accessors and Mutators
     public Player[] getCurrentPlayers() {
         return currentPlayers;
     }
@@ -67,6 +69,7 @@ public class BoardSpace {
         isPurchasable = purchasable;
     }
 
+    // Access name of space as a String
     public String toString() {
         return name;
     }
