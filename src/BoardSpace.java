@@ -4,6 +4,8 @@
  * Assignment: Monopoly, BoardSpace Class
  * Date due: 10/26
  */
+
+// By Maitra
 public class BoardSpace {
     Player owner;
     int cost;

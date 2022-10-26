@@ -123,11 +123,25 @@ public class Main {
         // Pay Fine to get out of jail
         if(player.isInJail()) {
             Scanner in = new Scanner(System.in);
-            System.out.println("Do you wanna pay a $50 fine to get out of jail?");
-            String jailResponse = in.nextLine();
-            if(jailResponse.equals("y")) {
-                player.setBalance(player.getBalance()-50); // updates balance
-                player.setInJail(false); // moves them out of jail
+
+            // Checks if has Get Out of Jail Free Card
+            boolean getOutOfJailFreeAvailable = false;
+            for(BoardSpace space : player.getProperties()) {
+                if(space.getName().equals("Get Out Of Jail Free")) {
+                    getOutOfJailFreeAvailable = true;
+                }
+                player.getProperties().remove(space);
+            }
+            if(getOutOfJailFreeAvailable) {
+                System.out.println("You used your Get Out Of Jail Free Card to Get Out Of Jail.");
+            }
+            else {
+                System.out.println("Do you wanna pay a $50 fine to get out of jail?");
+                String jailResponse = in.nextLine();
+                if(jailResponse.equals("y")) {
+                    player.setBalance(player.getBalance()-50); // updates balance
+                    player.setInJail(false); // moves them out of jail
+                }
             }
         }
 
@@ -231,6 +245,89 @@ public class Main {
 
                     }
 
+                    // Player lands on Chance, draws a Chance
+                    else if (game.getBoardSpace(player.getCurrentSpace()-1).getName().equals("Chance")) {
+
+                        // Chooses A Random Number from 1-10
+                        int max = 10;
+                        int min = 1;
+                        int randomChance = (int)Math.floor(Math.random()*(max-min+1)+min);
+
+                        // Advance to Boardwalk
+                        if(randomChance == 1) {
+                            System.out.println("You got a chance and advanced to Boardwalk");
+                            player.setCurrentSpace(40);
+                        }
+                        // Advance to Go
+                        if(randomChance == 2) {
+                            System.out.println("You got a chance and advanced to Go. You get +200");
+                            player.setCurrentSpace(0);
+                            player.setBalance(player.getBalance()+200);
+                        }
+                        // Bank plus 50
+                        if(randomChance == 3) {
+                            System.out.println("You got a chance and got 50 bucks from the Bank");
+                            player.setBalance(player.getBalance()+50);
+                        }
+                        // Speeding Fine
+                        if(randomChance == 4) {
+                            System.out.println("You got a chance and got a speeding ticket. You get -15");
+                            player.setBalance(player.getBalance()-15);
+                        }
+                        // Railroad
+                        if(randomChance == 5) {
+                            System.out.println("You got a chance and advance to the Nearest Railroad.");
+
+                        }
+                        // Utility
+                        if(randomChance == 6) {
+                            System.out.println("You got a chance and advance to the Nearest Utilities.");
+
+                        }
+                        // Go Back 3 Spaces
+                        if(randomChance == 7) {
+                            System.out.println("You got a chance and advance to the Nearest Railroad.");
+                            player.setCurrentSpace(player.getCurrentSpace()-3);
+                        }
+                        // ELected Chairman
+                        if(randomChance == 8) {
+                            System.out.println("You got a chance and got Elected Chairman of the Board. You Pay each player 50 dollars.");
+
+                            // Check if you need to pay first guy
+                            Link temp = game.getPlayers().first;
+                            Player tempPlayer = (Player) temp.t;
+                            if(!tempPlayer.equals(player)) {
+                                tempPlayer.setBalance(tempPlayer.getBalance()+150);
+                                player.setBalance(player.getBalance()-150);
+                            }
+
+                            // iterate through all players not named you and pay them 150
+                            temp = temp.nextLink;
+                            while(temp !=game.getPlayers().first) {
+                                tempPlayer = (Player) temp.t;
+                                if(!tempPlayer.equals(player)) {
+                                    tempPlayer.setBalance(tempPlayer.getBalance()+150);
+                                    player.setBalance(player.getBalance()-150);
+                                }
+                            }
+                        }
+                        // Building Loan
+                        if(randomChance == 9) {
+                            System.out.println("You got a chance and your building loan matured. You get +150");
+                            player.setBalance(player.getBalance()+150);
+                        }
+
+                        // Get Out of Jail Free Card
+                        if(randomChance == 10) {
+                            System.out.println("You got a chance and you got a get out of jail free card.");
+
+                            // Not A property but is stored by the player
+                            BoardSpace getOutOfJailFree = new BoardSpace(player, 0, 0, "Get Out Of Jail Free", false);
+                            player.addProperty(getOutOfJailFree);
+
+                        }
+
+                    }
                     // Player lands on Go to Jail, rip
                     else if (game.getBoardSpace(player.getCurrentSpace()-1).getName().equals("Go To Dungeons")) {
                         player.setInJail(true);
@@ -288,12 +385,6 @@ public class Main {
 
             // if they only own 1, its just 4*dice roll
             return lastDiceRoll*4;
-        }
-
-        // Special Conditions for Community Chest
-        if(space.getName().equals("Community Chest")) {
-            // 900 Dollar Tax or 10% tax
-            return 1 * space.getCost();
         }
 
         // Normal Tax

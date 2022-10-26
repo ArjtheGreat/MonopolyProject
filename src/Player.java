@@ -8,8 +8,7 @@ import java.util.Properties;
  * Date due: 10/26
  */
 
-// By Arjun
-
+// By Maitra
 public class Player {
     int balance;
     ArrayList<BoardSpace> properties;

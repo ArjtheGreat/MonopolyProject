@@ -4,6 +4,8 @@
  * Assignment: Monopoly, Circular Linked List Class
  * Date due: 10/26
  */
+
+// All code by Maitra
 public class CircularLinkedList<T> {
 
     public T t;
