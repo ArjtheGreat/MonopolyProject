@@ -120,10 +120,42 @@ public class Main {
     // Runs A Turn
     public static void turn(Player player, ArrayList<BoardSpace> storage) {
 
+        // Sell Property to Bank
+        Scanner in = new Scanner(System.in);
+        // Gotta check if player as at least 1 property
+        if(player.getProperties().size() > 0) {
+            System.out.println(player + ", would you like to sell a property to the Bank?");
+
+            if(in.nextLine().equals("y")) {
+                // Print Out Your Info
+                Player a = player;
+                System.out.println(a + " currently owns " + a.getProperties());
+
+                // Prompt Users for What Properties They Want To Sell
+                System.out.println("What properties would you like to sell to the Bank? (x, y, z)");
+                ArrayList<BoardSpace> givenProperties = new ArrayList<>();
+                String[] givenPropertiesSplit = in.nextLine().split(", ");
+
+                // Added Properties to Given Properties
+                for(int i = 0; i < givenPropertiesSplit.length; i++) {
+                    for(BoardSpace y : a.getProperties()) {
+                        if(y.getName().equals(givenPropertiesSplit[i])) {
+                            givenProperties.add(y);
+                        }
+                    }
+                }
+
+                // Remove ownership of the properties, give back original cost to player
+                for(BoardSpace space : givenProperties) {
+                    a.getProperties().remove(space);
+                    a.setBalance(a.getBalance()+space.getCost());
+                    space.setOwner(null);
+                    System.out.println("Transaction Success! You sold " + space.getName() + " to the bank. +" + space.getCost());
+                }
+            }
+        }
         // Pay Fine to get out of jail
         if(player.isInJail()) {
-            Scanner in = new Scanner(System.in);
-
             // Checks if has Get Out of Jail Free Card
             boolean getOutOfJailFreeAvailable = false;
             for(int i = 0; i<player.getProperties().size(); i++) {
@@ -184,6 +216,8 @@ public class Main {
     // Moves player
     public static void move(Player player, Game game) {
 
+        Scanner in = new Scanner(System.in);
+
         // iterates through all the players on space
         for(int i = 0; i <game.getBoardSpace(player.getCurrentSpace()-1).getCurrentPlayers().length; i++) {
 
@@ -195,7 +229,6 @@ public class Main {
                 if(game.getBoardSpace(player.getCurrentSpace()-1).isPurchasable() && game.getBoardSpace(player.getCurrentSpace()-1).getOwner() == null) {
 
                     // Prompts user if they want to purchase
-                    Scanner in = new Scanner(System.in);
                     System.out.println("Would you like to purchase this property?");
                     String out = in.nextLine();
 
@@ -347,7 +380,7 @@ public class Main {
         }
 
         // Trading Between Players
-        Scanner in = new Scanner(System.in);
+
 
         // Prompt User For Trade
         System.out.println("Would you like to trade with another player?");
