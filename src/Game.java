@@ -5,15 +5,12 @@
  * Date due: 10/26
  */
 public class Game {
+
     CircularLinkedList<Player> players;
     CircularLinkedList<BoardSpace> gameBoard;
 
     //colors
     public static final String RESET = "\u001B[0m";
-    public static final String RED = "\033[0;31m";     // RED
-    public static final String GREEN = "\033[0;32m";   // GREEN
-    public static final String YELLOW = "\033[0;33m";  // YELLOW
-    public static final String BLUE = "\033[0;34m";    // BLUE
 
     // Constructor
     public Game(CircularLinkedList<Player> players, CircularLinkedList<BoardSpace> gameBoard) {
@@ -67,32 +64,36 @@ public class Game {
 
         for (int i = 0; i < plays.length; i++) {
             if(plays[i]!=null){
-                //plays[i].getColor()
                 playString += plays[i].toString();
             }
         }
-        if (playString.length() < 4) {
+        if (playString.length() < 16) {
             playString = playString + currentSpace.firstTwoChars();
         }
-        for (int i = playString.length(); i <= 5; i++) {
-            playString += " ";
+        if(plays[0]!=null){
+            for (int i = playString.length(); i <= 5; i++) {
+                playString += " ";
+            }
+        }
+        else {
+            for (int i = playString.length(); i <= 5; i++) {
+                playString += " ";
+
+            }
+        }
+        String lineSpace = "";
+        if(currentSpace.owner!=null){
+            lineSpace = "|"+currentSpace.owner.colorName+playString+RESET;
+        }
+        else{
+            lineSpace = "|"+currentSpace.getColorStr()+playString+RESET;
         }
 
-        String lineSpace = "|"+playString;
         return lineSpace;
     }
 
 
     public void printBoard(){
-
-         /*
-        String str = RED+"ggggg"+RESET;
-        str += " ";
-        str = str+YELLOW+"hhhhh"+RESET;
-        System.out.print(str);
-
-        */
-
         //initialize dividers and spaces
         char side = '|';
         String blankSpace = "                                                              ";
@@ -131,6 +132,9 @@ public class Game {
                 System.out.println(capDivider);
                 for(int c = 0;c<width;c++){
                     System.out.print(lineSpace);
+                    currentLink = currentLink.nextLink;
+                    BoardSpace x = (BoardSpace) currentLink.t;
+                    lineSpace = makePrintString(x);
                 }
                 System.out.println('|');
                 currentLink = currentLink.nextLink;

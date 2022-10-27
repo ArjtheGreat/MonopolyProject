@@ -18,6 +18,9 @@ public class Main {
     // This Is Used to Keep track if there is a double roll
     static boolean doubleRoll;
 
+    // Keeps track of last space, for turn method
+    static int lastSpace;
+
     public static void main(String[] args) {
 
         // Players Set up
@@ -26,6 +29,7 @@ public class Main {
 
         // Board Setup
         BoardSpace go = new BoardSpace(null, 0, 0, "Go", false);
+
 
 
         // A ton of lines for all the squares
@@ -41,6 +45,19 @@ public class Main {
         // Game setup
         Game game = new Game(players, gameBoard);
         System.out.println("Welcome to Game of Thrones Monopoly. When you play the Game of Thrones, you win or you die. There is no middle ground. Let the game begin!");
+
+        // adds players to go
+        Link temp = game.getPlayers().first;
+        Player insertPlayer = (Player) temp.t;
+        go.addPlayer(insertPlayer);
+        temp = temp.nextLink;
+
+        // Iterate and add
+        while(temp != game.getPlayers().first) {
+            insertPlayer = (Player) temp.t;
+            go.addPlayer(insertPlayer);
+            temp = temp.nextLink;
+        }
 
         // Iterative loop that runs through the game
         while(!hasGameEnded(game)) { // until only 1 player is not bankrupt
@@ -77,12 +94,35 @@ public class Main {
     public static CircularLinkedList<Player> getPlayers() {
 
         // The Players Linked List
-        CircularLinkedList<Player> players = new CircularLinkedList<Player>(new Player(0, null, 'A', false));
+        CircularLinkedList<Player> players = new CircularLinkedList<Player>(new Player(0, null, 'A', false, "color"));
 
         // Keeps Tracks of # of players so they have at least 2 and dont go over 6
         int numPlayers = 1;
         Scanner in = new Scanner(System.in);
         while(true) {
+
+            // Color Setup
+            String color;
+            if(numPlayers==1){
+                //green
+                color = "\u001B[32m";
+            }
+            else if(numPlayers==2){
+                //yellow
+                color = "\u001B[33m";
+            }
+            else if(numPlayers==3){
+                //blue
+                color = "\u001B[34m";
+            }
+            else if(numPlayers==4){
+                //purple
+                color = "\u001B[35m";
+            }
+            else{
+                //cyan
+                color = "\u001B[36m";
+            }
 
             // Create New Player and all the assorted variables
             System.out.println("Player " + numPlayers + " character: ");
@@ -90,7 +130,7 @@ public class Main {
 
             // empty arraylist for the properties
             ArrayList<BoardSpace> properties = new ArrayList<BoardSpace>();
-            Player player = new Player(1500, properties, icon, false);
+            Player player = new Player(1500, properties, icon, false, color);
 
             // all start at go
             player.setCurrentSpace(0);
@@ -195,16 +235,17 @@ public class Main {
 
         // Updates the global static variable for the last dice roll in case player lands on Water Works or Electrc Company
         lastDiceRoll = diceRoll+diceRoll2;
-
+        lastSpace = player.getCurrentSpace();
         // Make sure the player doesnt go over 40, and sends them in a circle.
-        if(player.getCurrentSpace() + (diceRoll) > 39) {
+        if(player.getCurrentSpace() + (lastDiceRoll) > 39) {
             player.setBalance(player.getBalance() + 200);
-            player.setCurrentSpace(Math.abs(player.getCurrentSpace() + (diceRoll) - 40));
+            System.out.println(player + ", you passed go!");
+            player.setCurrentSpace(Math.abs(player.getCurrentSpace() + (lastDiceRoll) - 40));
         }
 
         // normal movement
         else {
-            player.setCurrentSpace(player.getCurrentSpace() + (diceRoll));
+            player.setCurrentSpace(player.getCurrentSpace() + (lastDiceRoll));
         }
 
         // updates to new square
@@ -218,165 +259,180 @@ public class Main {
 
         Scanner in = new Scanner(System.in);
 
+        // Cut off connection from old space
+        for(int i = 0; i<game.getBoardSpace(lastSpace).getCurrentPlayers().length; i++) {
+            if(game.getBoardSpace(lastSpace).getCurrentPlayers()[i] == player) {
+                System.out.println(game.getBoardSpace(lastSpace).getCurrentPlayers()[i]);
+                game.getBoardSpace(lastSpace).getCurrentPlayers()[i] = null;
+            }
+        }
         // iterates through all the players on space
         for(int i = 0; i <game.getBoardSpace(player.getCurrentSpace()-1).getCurrentPlayers().length; i++) {
-
             // Checks for the first empty space. adds the player in that empty space
-            if(game.getBoardSpace(player.getCurrentSpace()-1).getCurrentPlayers()[i] == null) {
-                game.getBoardSpace(player.getCurrentSpace()-1).getCurrentPlayers()[i] = player;
-
-                // Checks if this space purchasable and has no owner.
-                if(game.getBoardSpace(player.getCurrentSpace()-1).isPurchasable() && game.getBoardSpace(player.getCurrentSpace()-1).getOwner() == null) {
-
-                    // Prompts user if they want to purchase
-                    System.out.println("Would you like to purchase this property?");
-                    String out = in.nextLine();
-
-                    // If they say yes
-                    if(out.equals("y")) {
-
-                        // Railroad Check. Railroads increae by 2x for each railroad purchased.
-                        if(game.getBoardSpace(player.getCurrentSpace()-1).getName().contains("Road")) {
-
-                            // No Railroads Purchased yet
-                            if(game.getNumOwnedRailRoads() == 0) {
-                                player.setBalance(player.getBalance()-25);
-                            }
-
-                            // 1 Railroad Purchased
-                            if(game.getNumOwnedRailRoads() == 1) {
-                                player.setBalance(player.getBalance()-50);
-                            }
-
-                            // 2 Railroad Purchased
-                            if(game.getNumOwnedRailRoads() == 2) {
-                                player.setBalance(player.getBalance()-100);
-                            }
-
-                            // 3 Railroad Purchased
-                            if(game.getNumOwnedRailRoads() == 3) {
-                                player.setBalance(player.getBalance()-200);
-                            }
-                        }
-
-                        // Normal Purchase payment
-                        else {
-                            player.setBalance(player.getBalance()-game.getBoardSpace(player.getCurrentSpace()-1).cost);
-                        }
-
-                        // hands player ownership of new space. it is not purchasable anymore.
-                        game.getBoardSpace(player.getCurrentSpace()-1).setOwner(player);
-                        game.getBoardSpace(player.getCurrentSpace()-1).setPurchasable(false);
-                        player.addProperty(game.getBoardSpace(player.getCurrentSpace()-1));
-                    }
-                }
-
-                // Space is not available for purchase
-                else {
-
-                    // Player owns the space, so skip this next step
-                    if(game.getBoardSpace(player.getCurrentSpace()-1).getOwner() == player) {
-
-                    }
-
-                    // Player lands on Chance, draws a Chance
-                    else if (game.getBoardSpace(player.getCurrentSpace()-1).getName().equals("Chance")) {
-
-                        // Chooses A Random Number from 1-10
-                        int max = 10;
-                        int min = 1;
-                        int randomChance = (int)Math.floor(Math.random()*(max-min+1)+min);
-
-                        // Advance to Boardwalk
-                        if(randomChance == 1) {
-                            System.out.println("You got a chance and advanced to Boardwalk");
-                            player.setCurrentSpace(40);
-                        }
-                        // Advance to Go
-                        if(randomChance == 2) {
-                            System.out.println("You got a chance and advanced to Go. You get +200");
-                            player.setCurrentSpace(0);
-                            player.setBalance(player.getBalance()+200);
-                        }
-                        // Bank plus 50
-                        if(randomChance == 3) {
-                            System.out.println("You got a chance and got 50 bucks from the Bank");
-                            player.setBalance(player.getBalance()+50);
-                        }
-                        // Speeding Fine
-                        if(randomChance == 4) {
-                            System.out.println("You got a chance and got a speeding ticket. You get -15");
-                            player.setBalance(player.getBalance()-15);
-                        }
-                        // Railroad
-                        if(randomChance == 5) {
-                            System.out.println("You got a chance and advance to the Nearest Railroad.");
-
-                        }
-                        // Utility
-                        if(randomChance == 6) {
-                            System.out.println("You got a chance and advance to the Nearest Utilities.");
-
-                        }
-                        // Go Back 3 Spaces
-                        if(randomChance == 7) {
-                            System.out.println("You got a chance and advance to the Nearest Railroad.");
-                            player.setCurrentSpace(player.getCurrentSpace()-3);
-                        }
-                        // ELected Chairman
-                        if(randomChance == 8) {
-                            System.out.println("You got a chance and got Elected Chairman of the Board. You Pay each player 50 dollars.");
-
-                            // Check if you need to pay first guy
-                            Link temp = game.getPlayers().first;
-                            Player tempPlayer = (Player) temp.t;
-                            if(!tempPlayer.equals(player)) {
-                                tempPlayer.setBalance(tempPlayer.getBalance()+150);
-                                player.setBalance(player.getBalance()-150);
-                            }
-
-                            // iterate through all players not named you and pay them 150
-                            temp = temp.nextLink;
-                            while(temp !=game.getPlayers().first) {
-                                tempPlayer = (Player) temp.t;
-                                if(!tempPlayer.equals(player)) {
-                                    tempPlayer.setBalance(tempPlayer.getBalance()+150);
-                                    player.setBalance(player.getBalance()-150);
-                                }
-                                temp = temp.nextLink;
-                            }
-                        }
-                        // Building Loan
-                        if(randomChance == 9) {
-                            System.out.println("You got a chance and your building loan matured. You get +150");
-                            player.setBalance(player.getBalance()+150);
-                        }
-
-                        // Get Out of Jail Free Card
-                        if(randomChance == 10) {
-                            System.out.println("You got a chance and you got a get out of jail free card.");
-
-                            // Not A property but is stored by the player
-                            BoardSpace getOutOfJailFree = new BoardSpace(player, 0, 0, "Get Out Of Jail Free", false);
-                            player.addProperty(getOutOfJailFree);
-
-                        }
-
-                    }
-                    // Player lands on Go to Jail, rip
-                    else if (game.getBoardSpace(player.getCurrentSpace()-1).getName().equals("Go To Dungeons")) {
-                        player.setInJail(true);
-                        player.setCurrentSpace(10);
-                    }
-
-                    // Normal Rent Payment
-                    else {
-                        player.setBalance(player.getBalance() - getBoardSpaceCost(game.getBoardSpace(player.getCurrentSpace()-1), player.getBalance()));
-                    }
-
-                }
-                break;
+            if (game.getBoardSpace(player.getCurrentSpace() - 1).getCurrentPlayers()[i] == null) {
+                game.getBoardSpace(player.getCurrentSpace() - 1).getCurrentPlayers()[i] = player;
             }
+        }
+
+
+        // Checks if this space purchasable and has no owner.
+        if(game.getBoardSpace(player.getCurrentSpace()-1).isPurchasable() && game.getBoardSpace(player.getCurrentSpace()-1).getOwner() == null) {
+
+            // Prompts user if they want to purchase
+            System.out.println("Would you like to purchase this property? It costs " + game.getBoardSpace(player.getCurrentSpace()-1).getCost() + " Gold Dragons.");
+            String out = in.nextLine();
+
+            // If they say yes
+            if(out.equals("y")) {
+
+                // Railroad Check. Railroads increae by 2x for each railroad purchased.
+                if(game.getBoardSpace(player.getCurrentSpace()-1).getName().contains("Road")) {
+
+                    // No Railroads Purchased yet
+                    if(game.getNumOwnedRailRoads() == 0) {
+                        player.setBalance(player.getBalance()-25);
+                    }
+
+                    // 1 Railroad Purchased
+                    if(game.getNumOwnedRailRoads() == 1) {
+                        player.setBalance(player.getBalance()-50);
+                    }
+
+                    // 2 Railroad Purchased
+                    if(game.getNumOwnedRailRoads() == 2) {
+                        player.setBalance(player.getBalance()-100);
+                    }
+
+                    // 3 Railroad Purchased
+                    if(game.getNumOwnedRailRoads() == 3) {
+                        player.setBalance(player.getBalance()-200);
+                    }
+                }
+
+                // Normal Purchase payment
+                else {
+                    player.setBalance(player.getBalance()-game.getBoardSpace(player.getCurrentSpace()-1).cost);
+                }
+
+                // hands player ownership of new space. it is not purchasable anymore.
+                game.getBoardSpace(player.getCurrentSpace()-1).setOwner(player);
+                game.getBoardSpace(player.getCurrentSpace()-1).setPurchasable(false);
+                player.addProperty(game.getBoardSpace(player.getCurrentSpace()-1));
+            }
+        }
+
+        // Space is not available for purchase
+        else {
+
+            // Player owns the space, so skip this next step
+            if(game.getBoardSpace(player.getCurrentSpace()-1).getOwner() == player) {
+
+            }
+
+            // Player lands on Chance, draws a Chance
+            else if (game.getBoardSpace(player.getCurrentSpace()-1).getName().equals("Chance")) {
+
+                // Chooses A Random Number from 1-10
+                int max = 10;
+                int min = 1;
+                int randomChance = (int)Math.floor(Math.random()*(max-min+1)+min);
+
+                // Advance to Boardwalk
+                if(randomChance == 1) {
+                    System.out.println("You got a chance and advanced to Boardwalk");
+                    player.setCurrentSpace(40);
+                }
+                // Advance to Go
+                if(randomChance == 2) {
+                    System.out.println("You got a chance and advanced to Go. You get +200");
+                    player.setCurrentSpace(0);
+                    player.setBalance(player.getBalance()+200);
+                }
+                // Bank plus 50
+                if(randomChance == 3) {
+                    System.out.println("You got a chance and got 50 bucks from the Bank");
+                    player.setBalance(player.getBalance()+50);
+                }
+                // Speeding Fine
+                if(randomChance == 4) {
+                    System.out.println("You got a chance and got a speeding ticket. You get -15");
+                    player.setBalance(player.getBalance()-15);
+                }
+                // Railroad
+                if(randomChance == 5) {
+                    System.out.println("You got a chance and advance to the Nearest Railroad.");
+
+                }
+                // Utility
+                if(randomChance == 6) {
+                    System.out.println("You got a chance and advance to the Nearest Utilities.");
+
+                }
+                // Go Back 3 Spaces
+                if(randomChance == 7) {
+                    System.out.println("You got a chance and advance to the Nearest Railroad.");
+                    player.setCurrentSpace(player.getCurrentSpace()-3);
+                }
+                // ELected Chairman
+                if(randomChance == 8) {
+                    System.out.println("You got a chance and got Elected Chairman of the Board. You Pay each player 50 dollars.");
+
+                    // Check if you need to pay first guy
+                    Link temp = game.getPlayers().first;
+                    Player tempPlayer = (Player) temp.t;
+                    if(!tempPlayer.equals(player)) {
+                        tempPlayer.setBalance(tempPlayer.getBalance()+150);
+                        player.setBalance(player.getBalance()-150);
+                    }
+
+                    // iterate through all players not named you and pay them 150
+                    temp = temp.nextLink;
+                    while(temp !=game.getPlayers().first) {
+                        tempPlayer = (Player) temp.t;
+                        if(!tempPlayer.equals(player)) {
+                            tempPlayer.setBalance(tempPlayer.getBalance()+150);
+                            player.setBalance(player.getBalance()-150);
+                        }
+                        temp = temp.nextLink;
+                    }
+                }
+                // Building Loan
+                if(randomChance == 9) {
+                    System.out.println("You got a chance and your building loan matured. You get +150");
+                    player.setBalance(player.getBalance()+150);
+                }
+
+                // Get Out of Jail Free Card
+                if(randomChance == 10) {
+                    System.out.println("You got a chance and you got a get out of jail free card.");
+
+                    // Not A property but is stored by the player
+                    BoardSpace getOutOfJailFree = new BoardSpace(player, 0, 0, "Get Out Of Jail Free", false);
+                    player.addProperty(getOutOfJailFree);
+
+                }
+
+            }
+            // Player lands on Go to Jail, rip
+            else if (game.getBoardSpace(player.getCurrentSpace()-1).getName().equals("Go To Dungeons")) {
+                player.setInJail(true);
+                player.setCurrentSpace(10);
+            }
+
+            // Normal Rent Payment
+            else {
+                if(game.getBoardSpace(player.getCurrentSpace()-1).getOwner() !=null) {
+
+                    // Transfer Money between players
+                    int transferMoney = getBoardSpaceCost(game.getBoardSpace(player.getCurrentSpace()-1), player.getBalance());
+                    player.setBalance(player.getBalance() - transferMoney);
+                    game.getBoardSpace(player.getCurrentSpace()-1).getOwner().setBalance(player.getBalance() + transferMoney);
+
+                    // Notify What Player Owes
+                    System.out.println("You owe " + game.getBoardSpace(player.getCurrentSpace()-1).getOwner() + " " + game.getBoardSpace(player.getCurrentSpace()-1).getTax() + " Gold Dragons for rent on his property.");
+                }
+            }
+
         }
 
         // Trading Between Players
@@ -476,7 +532,6 @@ public class Main {
             if(out.equals("$")) {
                 return 900;
             }
-
             // For Percent Fee
             else {
                 return (int) (balance*0.1);

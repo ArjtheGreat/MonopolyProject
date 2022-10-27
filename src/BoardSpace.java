@@ -13,6 +13,7 @@ public class BoardSpace {
     String name;
     boolean isPurchasable;
     Player[] currentPlayers;
+    String colorStr = "\u001B[37m";
 
     // Constructor
     public BoardSpace(Player owner, int cost, int tax, String name, boolean isPurchasable) {
@@ -28,8 +29,13 @@ public class BoardSpace {
     public Player[] getCurrentPlayers() {
         return currentPlayers;
     }
-    public void setCurrentPlayers(Player[] currentPlayers) {
-        this.currentPlayers = currentPlayers;
+    public void addPlayer(Player player) {
+        for(int i = 0; i<getCurrentPlayers().length; i++) {
+            if(getCurrentPlayers()[i] == null) {
+                getCurrentPlayers()[i] = player;
+                break;
+            }
+        }
     }
 
     public Player getOwner() {
@@ -65,6 +71,13 @@ public class BoardSpace {
     }
     public void setPurchasable(boolean purchasable) {
         isPurchasable = purchasable;
+    }
+
+    public String getColorStr() {
+        return colorStr;
+    }
+    public void setColorStr(String colorStr) {
+        this.colorStr = colorStr;
     }
 
     // Access name of space as a String

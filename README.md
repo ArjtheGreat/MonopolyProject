@@ -28,7 +28,7 @@ public void isEmpty() - return true if first == null <br />
 
 
 Player <br />
-int balance, BoardSpace properties[], char icon, boolean inJail, int currentSpace <br />
+int balance, BoardSpace properties[], char icon, boolean inJail, int currentSpace, String colorName <br />
 public int getBalance() <br />
 public BoardSpace[] getProperties() <br />
 public char getIcon() <br />
@@ -39,7 +39,7 @@ public void setInJail <br />
 
 
 BoardSpace <br />
-Player owner, int tax, int cost, String name, boolean isPurchasable <br />
+Player owner, int tax, int cost, String name, boolean isPurchasable, String colorStr <br />
 public int getOwner() <br />
 public void setOwner(Player owner) <br />
 public int getCost() <br />
@@ -49,6 +49,8 @@ public void setTax(int tax) <br />
 public String getName() <br />
 isPurchasable() <br />
 public void setPurchasable() <br />
+public String getColorStr() <br />
+public void setColorStr(String colorStr) <br />
 
 Game <br />
 CircularLinkedList<Player> players, CircularLinkedList<BoardSpace> gameBoard <br />
