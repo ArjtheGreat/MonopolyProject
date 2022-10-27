@@ -8,13 +8,6 @@ public class Game {
     CircularLinkedList<Player> players;
     CircularLinkedList<BoardSpace> gameBoard;
 
-    //colors
-    public static final String RESET = "\u001B[0m";
-    public static final String RED = "\033[0;31m";     // RED
-    public static final String GREEN = "\033[0;32m";   // GREEN
-    public static final String YELLOW = "\033[0;33m";  // YELLOW
-    public static final String BLUE = "\033[0;34m";    // BLUE
-
     // Constructor
     public Game(CircularLinkedList<Player> players, CircularLinkedList<BoardSpace> gameBoard) {
         this.players = players;
@@ -61,36 +54,7 @@ public class Game {
         return num;
     }
 
-    public String makePrintString(BoardSpace currentSpace) {
-        String playString = "";
-        Player[] plays = currentSpace.getCurrentPlayers();
-
-            for (int i = 0; i < plays.length; i++) {
-                if(plays[i]!=null){
-                    //plays[i].getColor()
-                    playString += plays[i].toString();
-                }
-            }
-            if (playString.length() < 4) {
-                playString = playString + currentSpace.firstTwoChars();
-            }
-            for (int i = playString.length(); i <= 5; i++) {
-                playString += " ";
-            }
-
-        String lineSpace = "|"+playString;
-        return lineSpace;
-    }
-
     public void printBoard(){
-        /*
-        String str = RED+"ggggg"+RESET;
-        str += " ";
-        str = str+YELLOW+"hhhhh"+RESET;
-        System.out.print(str);
-
-        */
-
         //initialize dividers and spaces
         char side = '|';
         String blankSpace = "                                                              ";
@@ -104,7 +68,7 @@ public class Game {
 
         Link currentLink = gameBoard.first;
         BoardSpace currentSpace = gameBoard.t;
-        String lineSpace = makePrintString(currentSpace);
+        String lineSpace = "| "+currentSpace.toString()+" ";
         //for each row in the window, print what should be on that row in a battle, depending on what row its on
         System.out.println(capDivider);
         for (int r = 0; r < height; r++) {
@@ -112,8 +76,7 @@ public class Game {
                 for(int c = 0;c<width;c++){
                     System.out.print(lineSpace);
                     currentLink = currentLink.nextLink;
-                    BoardSpace x = (BoardSpace) currentLink.t;
-                    lineSpace = makePrintString(x);
+                    lineSpace = "|  "+currentLink.t.toString()+"  ";
                 }
                 System.out.println('|');
                 System.out.println(capDivider);
@@ -123,8 +86,7 @@ public class Game {
                 System.out.println(lineSpace+side+halfBlank+"MONOPOLY"+halfBlank+lineSpace+side);
                 System.out.println(lineDivider + blankSpace + lineDivider);
                 currentLink = currentLink.nextLink;
-                BoardSpace x = (BoardSpace) currentLink.t;
-                lineSpace = makePrintString(x);
+                lineSpace = "| "+currentLink.t.toString()+" ";
             }
             else if (r == 10) {
                 System.out.println(capDivider);
@@ -133,15 +95,13 @@ public class Game {
                 }
                 System.out.println('|');
                 currentLink = currentLink.nextLink;
-                BoardSpace x = (BoardSpace) currentLink.t;
-                lineSpace = makePrintString(x);
+                lineSpace = "| "+currentLink.t.toString()+" ";
             }
             else {
                 System.out.println(lineSpace+side+blankSpace+lineSpace+side);
                 System.out.println(lineDivider + blankSpace + lineDivider);
                 currentLink = currentLink.nextLink;
-                BoardSpace x = (BoardSpace) currentLink.t;
-                lineSpace = makePrintString(x);
+                lineSpace = "| "+currentLink.t.toString()+" ";
             }
         }
 
