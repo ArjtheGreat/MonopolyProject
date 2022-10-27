@@ -397,7 +397,7 @@ public class Main {
                 for(int i = 0; i < givenPropertiesSplit.length; i++) {
                     for(BoardSpace y : a.getProperties()) {
                         if(y.getName().equals(givenPropertiesSplit[i])) {
-                            offeredProperties.add(y);
+                            givenProperties.add(y);
                         }
                     }
                 }
@@ -406,16 +406,20 @@ public class Main {
                 System.out.println(x + ", do you accept the trade? (y/n)");
                 String acceptedTrade = in.nextLine();
                 if(acceptedTrade.equals("y")) {
+
+                    // Iterate Through Offered Properties, Swap Ownership
                     for(BoardSpace space : offeredProperties) {
-                        System.out.println(space);
                         x.getProperties().remove(space);
                         a.getProperties().add(space);
                     }
+
+                    // Iterate Through Given Properties, Swap Ownership
                     for(BoardSpace space : givenProperties) {
-                        System.out.println(space);
                         a.getProperties().remove(space);
                         x.getProperties().add(space);
                     }
+
+                    // Print Out New Property Ownership
                     System.out.println("Now " + a + " owns " + a.getProperties());
                     System.out.println("Now " + x + " owns " + x.getProperties());
                 }
