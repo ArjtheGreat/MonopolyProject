@@ -77,7 +77,7 @@ public class Main {
             }
 
             // Prints out player stats, for info and testing purposes
-            System.out.println(currentPlayer.getIcon() + " currently Has: " + currentPlayer.getBalance() + " Gold Dragons, and they hold these properties: " + currentPlayer.getProperties());
+            System.out.println(currentPlayer.getIcon() + " currently Has: " + currentPlayer.getBalance() + " Gold Dragons, and they hold these properties: " + currentPlayer.getProperties() + " and they currently have a mortgage on these properties: " + currentPlayer.getMortagedProperties());
 
             // Moves to the next player IF NOT double roll
             if(!doubleRoll) {
@@ -85,7 +85,7 @@ public class Main {
             }
 
             // print out board
-            game.printBoard();
+            game.printBoard(currentPlayer);
         }
         System.out.println("The Game of Thrones Has Ended. Only One Player Remains Supreme, They Have A Monopoly Over The Realm!");
     }
@@ -105,23 +105,23 @@ public class Main {
             String color;
             if(numPlayers==1){
                 //green
-                color = "\u001B[32m";
+                color = "\u001B[42m";
             }
             else if(numPlayers==2){
                 //yellow
-                color = "\u001B[33m";
+                color = "\u001B[43m";
             }
             else if(numPlayers==3){
                 //blue
-                color = "\u001B[34m";
+                color = "\u001B[44m";
             }
             else if(numPlayers==4){
                 //purple
-                color = "\u001B[35m";
+                color = "\u001B[45m";
             }
             else{
                 //cyan
-                color = "\u001B[36m";
+                color = "\u001B[46m";
             }
 
             // Create New Player and all the assorted variables
@@ -164,7 +164,7 @@ public class Main {
         Scanner in = new Scanner(System.in);
         // Gotta check if player as at least 1 property
         if(player.getProperties().size() > 0) {
-            System.out.println(player + ", would you like to sell a property to the Bank?");
+            System.out.println(player + ", would you like to sell a property to the Bank? (y/n)");
 
             if(in.nextLine().equals("y")) {
                 // Print Out Your Info
@@ -172,7 +172,7 @@ public class Main {
                 System.out.println(a + " currently owns " + a.getProperties());
 
                 // Prompt Users for What Properties They Want To Sell
-                System.out.println("What properties would you like to sell to the Bank? (x, y, z)");
+                System.out.println("What properties would you like to sell to the Bank? (Property1, Property2, Property3)");
                 ArrayList<BoardSpace> givenProperties = new ArrayList<>();
                 String[] givenPropertiesSplit = in.nextLine().split(", ");
 
@@ -209,7 +209,7 @@ public class Main {
                 System.out.println("You used your Get Out Of Jail Free Card to Get Out Of Jail.");
             }
             else {
-                System.out.println("Do you wanna pay a $50 fine to get out of jail?");
+                System.out.println("Do you wanna pay a $50 fine to get out of jail? (y/n)");
                 String jailResponse = in.nextLine();
                 if(jailResponse.equals("y")) {
                     player.setBalance(player.getBalance()-50); // updates balance
@@ -236,11 +236,10 @@ public class Main {
         // Updates the global static variable for the last dice roll in case player lands on Water Works or Electrc Company
         lastDiceRoll = diceRoll+diceRoll2;
         lastSpace = player.getCurrentSpace();
-        System.out.println(lastSpace);
         // Make sure the player doesnt go over 40, and sends them in a circle.
         if(player.getCurrentSpace() + (lastDiceRoll) > 39) {
             player.setBalance(player.getBalance() + 200);
-            System.out.println(player + ", you passed go!");
+            System.out.println(player + ", you passed go! +200");
             player.setCurrentSpace(Math.abs(player.getCurrentSpace() + (lastDiceRoll) - 40));
         }
 
@@ -268,7 +267,7 @@ public class Main {
             }
         }
         // iterates through all the players on space
-        for(int i = 0; i <game.getBoardSpace(player.getCurrentSpace()-1).getCurrentPlayers().length; i++) {
+        for(int i = 0; i <game.getBoardSpace(player.getCurrentSpace()).getCurrentPlayers().length; i++) {
             // Checks for the first empty space. adds the player in that empty space
             if (game.getBoardSpace(player.getCurrentSpace() - 1).getCurrentPlayers()[i] == null) {
                 game.getBoardSpace(player.getCurrentSpace() - 1).getCurrentPlayers()[i] = player;
@@ -278,18 +277,17 @@ public class Main {
 
 
         // Checks if this space purchasable and has no owner.
-        if(game.getBoardSpace(player.getCurrentSpace()-1).isPurchasable() && game.getBoardSpace(player.getCurrentSpace()-1).getOwner() == null) {
+        if(game.getBoardSpace(player.getCurrentSpace()).isPurchasable() && game.getBoardSpace(player.getCurrentSpace()).getOwner() == null) {
 
             // Prompts user if they want to purchase
-            System.out.println("Would you like to purchase this property? It costs " + game.getBoardSpace(player.getCurrentSpace()-1).getCost() + " Gold Dragons.");
+            System.out.println("Would you like to purchase this property? It costs " + game.getBoardSpace(player.getCurrentSpace()).getCost() + " Gold Dragons. (y/n)");
             String out = in.nextLine();
 
             // If they say yes
             if(out.equals("y")) {
 
                 // Railroad Check. Railroads increae by 2x for each railroad purchased.
-                if(game.getBoardSpace(player.getCurrentSpace()-1).getName().contains("Road")) {
-
+                if(game.getBoardSpace(player.getCurrentSpace()).getName().contains("Road")) {
                     // No Railroads Purchased yet
                     if(game.getNumOwnedRailRoads() == 0) {
                         player.setBalance(player.getBalance()-25);
@@ -313,13 +311,13 @@ public class Main {
 
                 // Normal Purchase payment
                 else {
-                    player.setBalance(player.getBalance()-game.getBoardSpace(player.getCurrentSpace()-1).cost);
+                    player.setBalance(player.getBalance()-game.getBoardSpace(player.getCurrentSpace()).cost);
                 }
 
                 // hands player ownership of new space. it is not purchasable anymore.
-                game.getBoardSpace(player.getCurrentSpace()-1).setOwner(player);
-                game.getBoardSpace(player.getCurrentSpace()-1).setPurchasable(false);
-                player.addProperty(game.getBoardSpace(player.getCurrentSpace()-1));
+                game.getBoardSpace(player.getCurrentSpace()).setOwner(player);
+                game.getBoardSpace(player.getCurrentSpace()).setPurchasable(false);
+                player.addProperty(game.getBoardSpace(player.getCurrentSpace()));
             }
         }
 
@@ -327,115 +325,181 @@ public class Main {
         else {
 
             // Player owns the space, so skip this next step
-            if(game.getBoardSpace(player.getCurrentSpace()-1).getOwner() != null && game.getBoardSpace(player.getCurrentSpace()-1).getOwner().equals(player)) {
+            if(game.getBoardSpace(player.getCurrentSpace()).getOwner() != null && game.getBoardSpace(player.getCurrentSpace()).getOwner().equals(player)) {
 
             }
 
             // Player lands on Chance, draws a Chance
-            else if (game.getBoardSpace(player.getCurrentSpace()-1).getName().equals("Chance")) {
+            else if (game.getBoardSpace(player.getCurrentSpace()).getName().equals("Chance")) {
 
 
             }
             // Player lands on Go to Jail, rip
-            else if (game.getBoardSpace(player.getCurrentSpace()-1).getName().equals("Go To Dungeons")) {
+            else if (game.getBoardSpace(player.getCurrentSpace()).getName().equals("Go To Dungeons")) {
                 player.setInJail(true);
                 player.setCurrentSpace(10);
             }
 
             // Normal Rent Payment
             else {
-                if(game.getBoardSpace(player.getCurrentSpace()-1).getOwner() !=null) {
+                if(game.getBoardSpace(player.getCurrentSpace()).isHasBeenMortgaged()) {
+
+                }
+                // Special Conditions For Income and Luxury Taxes
+                else if(game.getBoardSpace(player.getCurrentSpace()).getName().equals("Income Tax") || game.getBoardSpace(player.getCurrentSpace()).getName().equals("luxury Tax")) {
+
+                    // Two Possible Conditions - Flat or Percent
+                    System.out.println("Would you like to pay a flat $200 Dollar Fee or a 10% Tax ($/%)");
+                    String out = in.nextLine();
+
+                    // For Flat Fee
+                    if(out.equals("$")) {
+                        player.setBalance(player.getBalance()-200);
+                    }
+                    // For Percent Fee
+                    else {
+                        player.setBalance(player.getBalance()- (int) (player.getBalance()*0.1));
+                    }
+                }
+                else if(game.getBoardSpace(player.getCurrentSpace()).getOwner() !=null) {
 
                     // Transfer Money between players
-                    int transferMoney = getBoardSpaceCost(game.getBoardSpace(player.getCurrentSpace()-1), player.getBalance());
+                    int transferMoney = getBoardSpaceCost(game.getBoardSpace(player.getCurrentSpace()), player.getBalance());
                     player.setBalance(player.getBalance() - transferMoney);
-                    game.getBoardSpace(player.getCurrentSpace()-1).getOwner().setBalance(player.getBalance() + transferMoney);
+                    game.getBoardSpace(player.getCurrentSpace()).getOwner().setBalance(player.getBalance() + transferMoney);
 
                     // Notify What Player Owes
-                    System.out.println("You owe " + game.getBoardSpace(player.getCurrentSpace()-1).getOwner() + " " + game.getBoardSpace(player.getCurrentSpace()-1).getTax() + " Gold Dragons for rent on his property.");
+                    System.out.println("You owe " + game.getBoardSpace(player.getCurrentSpace()).getOwner() + " " + game.getBoardSpace(player.getCurrentSpace()).getTax() + " Gold Dragons for rent on his property.");
                 }
             }
 
         }
 
-        // Trading Between Players
+        if(player.getProperties().size() > 0) {
+            // Extra Element - Trading Between Players
+            // Prompt User For Trade
+            System.out.println("Would you like to trade with another player? (y/n)");
 
+            if(in.nextLine().equals("y")) {
 
-        // Prompt User For Trade
-        System.out.println("Would you like to trade with another player?");
+                // Locate the Player to Trade with
+                boolean keepTrading = true;
+                while(keepTrading) {
+                    System.out.println("Who would you like to trade with? (PlayerIcon)");
+                    String targetPLayer = in.nextLine();
 
-        if(in.nextLine().equals("y")) {
+                    // Temp Finds PLayer
+                    Link temp = game.getPlayers().first;
+                    while(!temp.t.toString().equals(targetPLayer)) { // Locates Player with Inputed Char
+                        temp = temp.nextLink;
+                    }
 
-            // Locate the Player to Trade with
-            boolean keepTrading = true;
-            while(keepTrading) {
-                System.out.println("Who would you like to trade with?");
-                String targetPLayer = in.nextLine();
+                    // Print Out Players Info
+                    Player x = (Player) temp.t;
+                    System.out.println(x + " currently owns " + x.getProperties());
 
-                // Temp Finds PLayer
-                Link temp = game.getPlayers().first;
-                while(!temp.t.toString().equals(targetPLayer)) { // Locates Player with Inputed Char
-                    temp = temp.nextLink;
+                    // Prompt Users for Traded Properties
+                    System.out.println("What properties would you like to trade for? (Property1, Property2, Property3)");
+                    ArrayList<BoardSpace> offeredProperties = new ArrayList<>();
+                    String[] offeredPropertiesSplit = in.nextLine().split(", ");
+
+                    // Added Properties to Offered Properties
+                    for(int i = 0; i < offeredPropertiesSplit.length; i++) {
+                        for(BoardSpace y : x.getProperties()) {
+                            if(y.getName().equals(offeredPropertiesSplit[i])) {
+                                offeredProperties.add(y);
+                            }
+                        }
+                    }
+
+                    // Print Out Your Info
+                    Player a = player;
+                    System.out.println(a + " currently owns " + a.getProperties());
+
+                    // Prompt Users for What Properties They Want To Trade
+                    System.out.println("What properties would you like to give? (Property1, Property2, Property3)");
+                    ArrayList<BoardSpace> givenProperties = new ArrayList<>();
+                    String[] givenPropertiesSplit = in.nextLine().split(", ");
+
+                    // Added Properties to Given Properties
+                    for(int i = 0; i < givenPropertiesSplit.length; i++) {
+                        for(BoardSpace y : a.getProperties()) {
+                            if(y.getName().equals(givenPropertiesSplit[i])) {
+                                givenProperties.add(y);
+                            }
+                        }
+                    }
+
+                    // Does User Accept
+                    System.out.println(x + ", do you accept the trade? (y/n)");
+                    String acceptedTrade = in.nextLine();
+                    if(acceptedTrade.equals("y")) {
+
+                        // Iterate Through Offered Properties, Swap Ownership
+                        for(BoardSpace space : offeredProperties) {
+                            x.getProperties().remove(space);
+                            a.getProperties().add(space);
+                        }
+
+                        // Iterate Through Given Properties, Swap Ownership
+                        for(BoardSpace space : givenProperties) {
+                            a.getProperties().remove(space);
+                            x.getProperties().add(space);
+                        }
+
+                        // Print Out New Property Ownership
+                        System.out.println("Now " + a + " owns " + a.getProperties());
+                        System.out.println("Now " + x + " owns " + x.getProperties());
+                    }
+                    keepTrading = false;
                 }
+            }
 
-                // Print Out Players Info
-                Player x = (Player) temp.t;
-                System.out.println(x + " currently owns " + x.getProperties());
+            // Extra Element - Mortgage
+            System.out.println("Would you like to mortgage any of your properties? (y/n)");
+            String mortgageResponse = in.nextLine();
+            if (mortgageResponse.equals("y")) {
 
-                // Prompt Users for Traded Properties
-                System.out.println("What properties would you like to trade for? (x, y, z)");
-                ArrayList<BoardSpace> offeredProperties = new ArrayList<>();
-                String[] offeredPropertiesSplit = in.nextLine().split(", ");
+                // Get the Properties that they want to mortgage
+                System.out.println("What properties would you like to mortgage? You currently own these properties: " + player.getProperties());
+                String[] mortgagedPropertiesSplit = in.nextLine().split(", ");
 
-                // Added Properties to Offered Properties
-                for(int i = 0; i < offeredPropertiesSplit.length; i++) {
-                    for(BoardSpace y : x.getProperties()) {
-                        if(y.getName().equals(offeredPropertiesSplit[i])) {
-                            offeredProperties.add(y);
+                // Added Properties to Mortgaged Properties. T
+                for(int i = 0; i < mortgagedPropertiesSplit.length; i++) {
+                    for(BoardSpace y : player.getProperties()) {
+                        if(y.getName().equals(mortgagedPropertiesSplit[i]) && !y.isHasBeenMortgaged()) {
+
+                            // Set Property to Mortgaged
+                            game.addMortgage(y, player);
                         }
                     }
                 }
+            }
 
-                // Print Out Your Info
-                Player a = player;
-                System.out.println(a + " currently owns " + a.getProperties());
+            // Unmortgage Property - available ONLY if player has no properties
+            if(player.getMortagedProperties().size()>0) {
 
-                // Prompt Users for What Properties They Want To Trade
-                System.out.println("What properties would you like to give? (x, y, z)");
-                ArrayList<BoardSpace> givenProperties = new ArrayList<>();
-                String[] givenPropertiesSplit = in.nextLine().split(", ");
+                // Prompt User
+                System.out.println("Would you like to unmortgage any of your properties? (y/n)");
+                String unMortageResponse = in.nextLine();
 
-                // Added Properties to Given Properties
-                for(int i = 0; i < givenPropertiesSplit.length; i++) {
-                    for(BoardSpace y : a.getProperties()) {
-                        if(y.getName().equals(givenPropertiesSplit[i])) {
-                            givenProperties.add(y);
+                if (unMortageResponse.equals("y")) {
+
+                    // What Properties?
+                    System.out.println("What properties would you like to unmortgage?");
+                    String[] unmortgagedPropertiesSplit = in.nextLine().split(", ");
+
+                    // Added Properties to Given Properties
+                    for(int i = 0; i < unmortgagedPropertiesSplit.length; i++) {
+                        for(BoardSpace y : player.getProperties()) {
+                            if(y.getName().equals(unmortgagedPropertiesSplit[i]) && y.isHasBeenMortgaged()) {
+
+                                // Unmortgage Property
+                                game.removedMortgage(y, player);
+                            }
                         }
                     }
                 }
-
-                // Does User Accept
-                System.out.println(x + ", do you accept the trade? (y/n)");
-                String acceptedTrade = in.nextLine();
-                if(acceptedTrade.equals("y")) {
-
-                    // Iterate Through Offered Properties, Swap Ownership
-                    for(BoardSpace space : offeredProperties) {
-                        x.getProperties().remove(space);
-                        a.getProperties().add(space);
-                    }
-
-                    // Iterate Through Given Properties, Swap Ownership
-                    for(BoardSpace space : givenProperties) {
-                        a.getProperties().remove(space);
-                        x.getProperties().add(space);
-                    }
-
-                    // Print Out New Property Ownership
-                    System.out.println("Now " + a + " owns " + a.getProperties());
-                    System.out.println("Now " + x + " owns " + x.getProperties());
-                }
-                keepTrading = false;
             }
         }
     }
@@ -443,23 +507,6 @@ public class Main {
     // Returns Cost of Landing on A Space
     public static int getBoardSpaceCost(BoardSpace space, int balance) {
         Scanner in = new Scanner(System.in);
-
-        // Special Conditions For Income and Luxury Taxes
-        if(space.getName().equals("Income Tax") || space.getName().equals("luxury Tax")) {
-
-            // Two Possible Conditions - Flat or Percent
-            System.out.println("Would you like to pay a flat $900 Dollar Fee or a 10% Tax ($/%)");
-            String out = in.nextLine();
-
-            // For Flat Fee
-            if(out.equals("$")) {
-                return 900;
-            }
-            // For Percent Fee
-            else {
-                return (int) (balance*0.1);
-            }
-        }
 
         // Special Conditions for Water Works and Electric Company (AKA Dragon Breeder Company)
         if(space.getName().equals("Water Works") || space.getName().equals("Dragon Breeder Company")) {

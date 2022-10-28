@@ -56,6 +56,25 @@ public class CircularLinkedList<T> {
         return out;
     }
 
+    // Deletes Element in List
+    public Link delete(Object value) {
+        Link currentLink = first;
+
+        // Iterate through linked list and find object
+        while(currentLink.nextLink != null) {
+
+            // break connections, make linked list jump
+            if(currentLink.nextLink.t.equals(value)) {
+                Link temp = currentLink.nextLink;
+                currentLink.nextLink = currentLink.nextLink.nextLink;
+                return temp;
+            }
+            currentLink = currentLink.nextLink;
+        }
+        System.out.println("This value is not in the Linked List");
+        return null;
+    }
+
     // Find Num of Elements in Linked List
     public int size() {
         Link temp = first;

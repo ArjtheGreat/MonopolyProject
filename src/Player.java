@@ -61,6 +61,17 @@ public class Player {
         properties.add(property);
     }
 
+    // Returns All Mortgaged Properties
+    public ArrayList<BoardSpace> getMortagedProperties() {
+        ArrayList<BoardSpace> mortgagedProperties = new ArrayList<>();
+        for(BoardSpace space : properties) {
+            if(space.isHasBeenMortgaged()) {
+                mortgagedProperties.add(space);
+            }
+        }
+        return mortgagedProperties;
+    }
+
     public char getIcon() {
         return icon;
     }
@@ -68,6 +79,7 @@ public class Player {
     public void setIcon(char icon) {
         this.icon = icon;
     }
+
 
     public String getColorName() {
         return colorName;

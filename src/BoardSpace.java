@@ -14,6 +14,7 @@ public class BoardSpace {
     boolean isPurchasable;
     Player[] currentPlayers;
     String colorStr = "\u001B[37m";
+    boolean hasBeenMortgaged;
 
     // Constructor
     public BoardSpace(Player owner, int cost, int tax, String name, boolean isPurchasable) {
@@ -23,6 +24,7 @@ public class BoardSpace {
         this.name = name;
         this.isPurchasable = isPurchasable;
         currentPlayers = new Player[6]; //Keeps track of players on the space
+        hasBeenMortgaged = false;
     }
 
     // Accessors and Mutators
@@ -37,6 +39,15 @@ public class BoardSpace {
             }
         }
     }
+
+    public boolean isHasBeenMortgaged() {
+        return hasBeenMortgaged;
+    }
+
+    public void setHasBeenMortgaged(boolean hasBeenMortgaged) {
+        this.hasBeenMortgaged = hasBeenMortgaged;
+    }
+
 
     public Player getOwner() {
         return owner;
@@ -84,6 +95,8 @@ public class BoardSpace {
     public String toString() {
         return name;
     }
+
+
     public String firstTwoChars() {
         return name.substring(0,2);
     }

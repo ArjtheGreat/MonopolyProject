@@ -57,14 +57,24 @@ public class Game {
         return num;
     }
 
+    // Mortgage Methods
+    public void addMortgage(BoardSpace space, Player player){
+        player.setBalance(player.getBalance()+space.getCost());
+        space.setHasBeenMortgaged(true);
+    }
+    public void removedMortgage(BoardSpace space, Player player){
+        player.setBalance(player.getBalance() - (int)1.1*space.getCost());
+        space.setHasBeenMortgaged(false);
+    }
+
     public String makePrintString(BoardSpace currentSpace) {
         String playString = "";
         Player[] plays = currentSpace.getCurrentPlayers();
 
         for (int i = 0; i < plays.length; i++) {
-            if(plays[i]!=null){
-                playString += plays[i].toString();
-            }
+//            if(plays[i]!=null){
+//                playString += plays[i].toString();
+//            }
         }
         if (playString.length() < 16) {
             playString = playString + currentSpace.firstTwoChars();
@@ -92,7 +102,7 @@ public class Game {
     }
 
 
-    public void printBoard(){
+    public void printBoard(Player currentPlayer){
         //initialize dividers and spaces
         char side = '|';
         String blankSpace = "                                                              ";
