@@ -55,4 +55,15 @@ public class CircularLinkedList<T> {
         }
         return out;
     }
+
+    // Find Num of Elements in Linked List
+    public int size() {
+        Link temp = first;
+        int count = 0;
+        while (temp != null) {
+            temp = temp.nextLink;
+            count++;
+        }
+        return count;
+    }
 }
