@@ -64,6 +64,8 @@ public class Player {
     // Returns All Mortgaged Properties
     public ArrayList<BoardSpace> getMortagedProperties() {
         ArrayList<BoardSpace> mortgagedProperties = new ArrayList<>();
+
+        // Iterate through properties, find hasBeenMortaged ones
         for(BoardSpace space : properties) {
             if(space.isHasBeenMortgaged()) {
                 mortgagedProperties.add(space);

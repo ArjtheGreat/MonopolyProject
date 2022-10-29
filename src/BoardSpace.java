@@ -31,6 +31,8 @@ public class BoardSpace {
     public Player[] getCurrentPlayers() {
         return currentPlayers;
     }
+
+    // Find an open space in the board to add player
     public void addPlayer(Player player) {
         for(int i = 0; i<getCurrentPlayers().length; i++) {
             if(getCurrentPlayers()[i] == null) {

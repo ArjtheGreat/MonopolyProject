@@ -85,6 +85,7 @@ public class Main {
             }
 
             // print out board
+            System.out.println("Updated Board After " + currentPlayer + "'s turn: (The Red Text Is The Spot Where The Current Player Is)");
             game.printBoard(currentPlayer);
         }
         System.out.println("The Game of Thrones Has Ended. Only One Player Remains Supreme, They Have A Monopoly Over The Realm!");
@@ -118,6 +119,10 @@ public class Main {
             else if(numPlayers==4){
                 //purple
                 color = "\u001B[45m";
+            }
+            else if(numPlayers==5){
+                //red
+                color = "\u001B[31m";
             }
             else{
                 //cyan
@@ -209,6 +214,8 @@ public class Main {
                 System.out.println("You used your Get Out Of Jail Free Card to Get Out Of Jail.");
             }
             else {
+
+                // Prompt for fine
                 System.out.println("Do you wanna pay a $50 fine to get out of jail? (y/n)");
                 String jailResponse = in.nextLine();
                 if(jailResponse.equals("y")) {
@@ -285,34 +292,8 @@ public class Main {
 
             // If they say yes
             if(out.equals("y")) {
-
-                // Railroad Check. Railroads increae by 2x for each railroad purchased.
-                if(game.getBoardSpace(player.getCurrentSpace()).getName().contains("Road")) {
-                    // No Railroads Purchased yet
-                    if(game.getNumOwnedRailRoads() == 0) {
-                        player.setBalance(player.getBalance()-25);
-                    }
-
-                    // 1 Railroad Purchased
-                    if(game.getNumOwnedRailRoads() == 1) {
-                        player.setBalance(player.getBalance()-50);
-                    }
-
-                    // 2 Railroad Purchased
-                    if(game.getNumOwnedRailRoads() == 2) {
-                        player.setBalance(player.getBalance()-100);
-                    }
-
-                    // 3 Railroad Purchased
-                    if(game.getNumOwnedRailRoads() == 3) {
-                        player.setBalance(player.getBalance()-200);
-                    }
-                }
-
-                // Normal Purchase payment
-                else {
-                    player.setBalance(player.getBalance()-game.getBoardSpace(player.getCurrentSpace()).cost);
-                }
+                // Normal Payment
+                player.setBalance(player.getBalance()-game.getBoardSpace(player.getCurrentSpace()).cost);
 
                 // hands player ownership of new space. it is not purchasable anymore.
                 game.getBoardSpace(player.getCurrentSpace()).setOwner(player);
@@ -346,7 +327,7 @@ public class Main {
 
                 }
                 // Special Conditions For Income and Luxury Taxes
-                else if(game.getBoardSpace(player.getCurrentSpace()).getName().equals("Income Tax") || game.getBoardSpace(player.getCurrentSpace()).getName().equals("luxury Tax")) {
+                else if(game.getBoardSpace(player.getCurrentSpace()).getName().equals("Income Tax") || game.getBoardSpace(player.getCurrentSpace()).getName().equals("Luxury Tax")) {
 
                     // Two Possible Conditions - Flat or Percent
                     System.out.println("Would you like to pay a flat $200 Dollar Fee or a 10% Tax ($/%)");
@@ -356,10 +337,34 @@ public class Main {
                     if(out.equals("$")) {
                         player.setBalance(player.getBalance()-200);
                     }
+                    // Railroads Scale
+                    else if(game.getBoardSpace(player.getCurrentSpace()).getName().contains("Road")) {
+                        // No Railroads Purchased yet
+                        if(game.getNumOwnedRailRoads(game.getBoardSpace(player.getCurrentSpace()).getOwner()) == 1) {
+                            player.setBalance(player.getBalance()-25);
+                        }
+
+                        // 1 Railroad Purchased
+                        if(game.getNumOwnedRailRoads(game.getBoardSpace(player.getCurrentSpace()).getOwner()) == 2) {
+                            player.setBalance(player.getBalance()-50);
+                        }
+
+                        // 2 Railroad Purchased
+                        if(game.getNumOwnedRailRoads(game.getBoardSpace(player.getCurrentSpace()).getOwner()) == 3) {
+                            player.setBalance(player.getBalance()-100);
+                        }
+
+                        // 3 Railroad Purchased
+                        if((game.getNumOwnedRailRoads(game.getBoardSpace(player.getCurrentSpace()).getOwner()) == 4)) {
+                            player.setBalance(player.getBalance()-200);
+                        }
+                    }
+
                     // For Percent Fee
                     else {
                         player.setBalance(player.getBalance()- (int) (player.getBalance()*0.1));
                     }
+
                 }
                 else if(game.getBoardSpace(player.getCurrentSpace()).getOwner() !=null) {
 
@@ -398,6 +403,10 @@ public class Main {
                     Player x = (Player) temp.t;
                     System.out.println(x + " currently owns " + x.getProperties());
 
+                    //Cash
+                    System.out.println("How much Gold Dragons Do You Want To Offer?");
+                    int cashTransfer = Integer.parseInt(in.nextLine());
+
                     // Prompt Users for Traded Properties
                     System.out.println("What properties would you like to trade for? (Property1, Property2, Property3)");
                     ArrayList<BoardSpace> offeredProperties = new ArrayList<>();
@@ -434,6 +443,9 @@ public class Main {
                     System.out.println(x + ", do you accept the trade? (y/n)");
                     String acceptedTrade = in.nextLine();
                     if(acceptedTrade.equals("y")) {
+
+                        x.setBalance(x.getBalance() + cashTransfer);
+                        a.setBalance(a.getBalance() - cashTransfer);
 
                         // Iterate Through Offered Properties, Swap Ownership
                         for(BoardSpace space : offeredProperties) {
@@ -557,6 +569,14 @@ public class Main {
             Player player = (Player) temp.t;
             if(player.getBalance() > 0) {
                 numPlayersNotBankrupt++;
+            }
+
+            // Mortgage
+            else {
+                for(int i=0; i<player.getProperties().size(); i++){
+                    //sets all the players properties to mortgaged
+                    player.getProperties().get(i).setHasBeenMortgaged(true);
+                }
             }
 
             // If more than one player still has profit, then the game goes on
