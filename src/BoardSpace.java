@@ -5,7 +5,7 @@
  * Date due: 10/26
  */
 
-// By Maitra
+// Code By Maitra
 public class BoardSpace {
     Player owner;
     int cost;

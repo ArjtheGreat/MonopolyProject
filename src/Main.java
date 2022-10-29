@@ -9,7 +9,7 @@ import java.util.Scanner;
  * Date due: 10/26
  */
 
-// All code by Maitra
+// Code by Maitra and Elliott
 public class Main {
 
     // This is used for water works and electric company
@@ -21,6 +21,7 @@ public class Main {
     // Keeps track of last space, for turn method
     static int lastSpace;
 
+    // by Maitra
     public static void main(String[] args) {
 
         // Players Set up
@@ -91,6 +92,7 @@ public class Main {
         System.out.println("The Game of Thrones Has Ended. Only One Player Remains Supreme, They Have A Monopoly Over The Realm!");
     }
 
+    // by Elliott
     // Prompts User For Players
     public static CircularLinkedList<Player> getPlayers() {
 
@@ -162,6 +164,7 @@ public class Main {
         return players;
     }
 
+    // By Maitra
     // Runs A Turn
     public static void turn(Player player, ArrayList<BoardSpace> storage) {
 
@@ -260,7 +263,7 @@ public class Main {
     }
 
 
-
+    // By Maitra
     // Moves player
     public static void move(Player player, Game game) {
 
@@ -516,6 +519,7 @@ public class Main {
         }
     }
 
+    // by Maitra
     // Returns Cost of Landing on A Space
     public static int getBoardSpaceCost(BoardSpace space, int balance) {
         Scanner in = new Scanner(System.in);
@@ -545,6 +549,7 @@ public class Main {
     }
 
 
+    // by Maitra
     // Checks to see if game has ended
     public static boolean hasGameEnded(Game game) {
 

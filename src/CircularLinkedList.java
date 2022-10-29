@@ -5,7 +5,7 @@
  * Date due: 10/26
  */
 
-// All code by Maitra
+// Code by Maitra
 public class CircularLinkedList<T> {
 
     public T t;

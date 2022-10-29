@@ -4,6 +4,8 @@
  * Assignment: Monopoly, Game Class
  * Date due: 10/26
  */
+
+// Code by Elliott
 public class Game {
     CircularLinkedList<Player> players;
     CircularLinkedList<BoardSpace> gameBoard;
