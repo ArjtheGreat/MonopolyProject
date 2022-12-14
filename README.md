@@ -1,6 +1,6 @@
 # Monopoly Project
  
-## Monopoly Simulator Designed by Arjun
+## Monopoly Simulator Designed by Arjun and Elliot
 
 # Classes and Methods: <br />
 Classes: Link, CircularLinkedList, Player, BoardSpace, Main, Game <br />
